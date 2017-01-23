@@ -19,7 +19,7 @@ The "Help" button offers all the information necessary.
 
 > Theme Browser: Select a preset color scheme to save or edit as you see fit.
 
-> Save to file: Saves current settings to ~.Xdefaults.
+> Save to file: Saves current settings to a file.
 
 > Save to .Xdefaults: Same as above, saves to the Xdefaults file.
 
