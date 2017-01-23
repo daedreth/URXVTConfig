@@ -23,15 +23,14 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
     QObject::connect(ui->checkBoxTransparencyEnabled, SIGNAL(toggled(bool)), ui->horizontalSliderShading, SLOT(setEnabled(bool)));
     QObject::connect(ui->checkBoxTransparencyEnabled, SIGNAL(toggled(bool)), ui->spinBoxShading, SLOT(setEnabled(bool)));
 
-    ui->lineEditBrowser->setDisabled(true);
     QObject::connect(ui->checkBoxClickableUrls, SIGNAL(toggled(bool)), ui->lineEditBrowser, SLOT(setEnabled(bool)));
 
+    ui->lineEditBrowser->setDisabled(true);
     ui->checkBoxTabs->setChecked(false);
-
 }
 
-    // setting up the filepath
-    QString pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
+// setting up the filepath
+QString pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
 
 URXVTConfig::~URXVTConfig()
 {
@@ -40,6 +39,9 @@ URXVTConfig::~URXVTConfig()
 
 void URXVTConfig::updatePreview()
 {
+
+    // Set up all the colors
+
     QColor backgroundColor(ui->lineEditColor2->text());
     QColor rowColor(ui->lineEditColor5->text());
     QColor includeColor(ui->lineEditColor14->text());
@@ -49,6 +51,9 @@ void URXVTConfig::updatePreview()
     QColor stdColor(ui->lineEditColor1->text());
     QColor commentColor(ui->lineEditColor12->text());
 
+
+    // Turn colors into qpalettes
+
     QPalette backgroundPal = ui->lineEditPreviewBackground->palette();
     QPalette rowPal = ui->labelPreviewRow1->palette();
     QPalette includePal = ui->labelPreviewInclude->palette();
@@ -57,6 +62,9 @@ void URXVTConfig::updatePreview()
     QPalette namespacePal = ui->labelPreviewNamespace->palette();
     QPalette stdPal = ui->labelPreviewStd->palette();
     QPalette commentPal = ui->labelPreviewComment->palette();
+
+
+    // Apply color settings to UI
 
     backgroundPal.setColor(ui->lineEditPreviewBackground->backgroundRole(), backgroundColor);
     ui->lineEditPreviewBackground->setPalette(backgroundPal);
@@ -98,6 +106,7 @@ void URXVTConfig::updatePreview()
     ui->labelPreviewEnd->setPalette(stdPal);
 
     // Font
+
     ui->labelPreviewRow1->setFont(ui->fontComboBox->currentFont());
     ui->labelPreviewRow2->setFont(ui->fontComboBox->currentFont());
     ui->labelPreviewRow3->setFont(ui->fontComboBox->currentFont());
@@ -121,6 +130,9 @@ void URXVTConfig::updatePreview()
 
 }
 
+    // These functions apply colors to lineEdits,
+    // I am aware that two of those are the same.
+
 void setColorDefault(QLineEdit *line, QString colorString)
 {
     QColor color(colorString);
@@ -138,7 +150,6 @@ void setColor(QLineEdit *line)
     line->setText(color.name());
     pal.setColor(line->backgroundRole(), color);
     line->setPalette(pal);
-
 }
 
 void setColorFromLoad(QString colorString, QLineEdit *line)
@@ -154,6 +165,7 @@ void setColorFromLoad(QString colorString, QLineEdit *line)
 void URXVTConfig::on_actionNew_triggered()
 {
     // Color reset
+
     ui->lineEditColor1->setText("#c5c8c6");
     setColorDefault(ui->lineEditColor1, ui->lineEditColor1->text());
     ui->lineEditColor2->setText("#1d1f21");
@@ -194,17 +206,22 @@ void URXVTConfig::on_actionNew_triggered()
     setColorDefault(ui->lineEditColor19, ui->lineEditColor19->text());
 
     // Transparency reset
+
     ui->checkBoxTransparencyEnabled->setChecked(false);
     ui->horizontalSliderShading->setValue(0);
     ui->horizontalSliderShading->setEnabled(false);
 
     // Scrollbar reset
+
     ui->checkBoxScrollbarEnabled->setChecked(true);
     ui->checkBoxScrollbarRight->setChecked(true);
 
     // Clickable URL reset
+
     ui->checkBoxClickableUrls->setChecked(false);
     ui->lineEditBrowser->setText("URL-Handler?");
+
+    // Other reset
 
     ui->spinBoxFontSize->setValue(12);
     ui->spinBoxFontSpacing->setValue(0);
@@ -217,6 +234,7 @@ void URXVTConfig::on_actionNew_triggered()
 void URXVTConfig::on_actionOpen_triggered()
 {
     QFile file(pathToFile);
+
     if (!file.open(QIODevice::ReadOnly))
     {
         QMessageBox msgBox;
@@ -224,16 +242,15 @@ void URXVTConfig::on_actionOpen_triggered()
         msgBox.setInformativeText("Assure you have permissions to modify the file or that the file exists!");
         msgBox.exec();
     }else{
-    for(int i = 0; i < 50; i++)
-    //while (!file.atEnd())  - deprecated attempt
+    for(int i = 0; i < 100; i++)
     {
         QString line = file.readLine();
 
         if (line.startsWith("!") || line.startsWith("#"))
         {
-        // dealing with commented out lines
-
+            // this deals with commented out lines
             continue;
+
         }else if(line.startsWith("*.foreground")){
             ui->lineEditColor1->setText(line.mid(line.length()-8,7));
             setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor1);
@@ -362,11 +379,16 @@ void URXVTConfig::on_actionSave_triggered()
         file.remove();
         file.close();
         file.open(QIODevice::ReadWrite);
+
+        // Open stream in order to write to file
+
         QTextStream initialMessage(&file);
         initialMessage << "##### THIS FILE IS BEING CURRENTLY MANAGED BY URXVTCONFIG #####" << endl;
         initialMessage << "##### CHANGES DONE TO THIS FILE MANUALLY MAY AFFECT THE FUNCTIONALITY ######" << endl;
         initialMessage << "##### PROCEED WITH CAUTION! #####" << endl << endl;
         file.close();
+
+        // Reopen the file to prevent errors
 
         file.open(QIODevice::Append);
         QTextStream stream(&file);
@@ -400,7 +422,8 @@ void URXVTConfig::on_actionSave_triggered()
         stream << "*.color7:      " << ui->lineEditColor18->text() << endl;
         stream << "*.color15:     " << ui->lineEditColor19->text() << endl << endl;
 
-        // scrollbar
+        // Scrollbar
+
         if(ui->checkBoxScrollbarEnabled->isChecked())
         {
             stream << "URxvt*scrollBar:     true" << endl;
@@ -414,7 +437,8 @@ void URXVTConfig::on_actionSave_triggered()
             stream << "URxvt*scrollBar_right:   false" << endl << endl;
         }
 
-        // transparency
+        // Transparency
+
         if(ui->checkBoxTransparencyEnabled->isChecked()){
             stream << "URxvt*transparent:   true" << endl;
             stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
@@ -422,7 +446,8 @@ void URXVTConfig::on_actionSave_triggered()
             stream << "URxvt*transparent:   false" << endl << endl;
         }
 
-        // font
+        // Font
+
         QString current = ui->fontComboBox->currentFont().toString();
         current.chop(20);
         stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl << endl;
@@ -432,7 +457,6 @@ void URXVTConfig::on_actionSave_triggered()
         }
 
         stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl;
-
 
         if(ui->checkBoxFontAntialiasing->isChecked())
         {
@@ -447,6 +471,8 @@ void URXVTConfig::on_actionSave_triggered()
         }else{
             stream << "*autohint:  false" << endl << endl;
         }
+
+        // Plugins
 
         if(ui->checkBoxClickableUrls->isChecked())
         {
@@ -468,12 +494,16 @@ void URXVTConfig::on_actionSave_triggered()
 
         file.close();
 
+        // Confirmation message
+
         QMessageBox msgBox;
         msgBox.setText("Changes saved!");
         msgBox.exec();
 
     }
 }
+
+// apply changes to lineEditColor's
 
 void URXVTConfig::on_pushButtonColor1_clicked()
 {
@@ -591,16 +621,21 @@ void URXVTConfig::on_pushButtonColor19_clicked()
 
 void URXVTConfig::on_checkBoxClickableUrls_clicked()
 {
-    if(ui->lineEditBrowser->isEnabled()){
-    QMessageBox msgBox;
-    msgBox.setText("External software necessary!!");
-    msgBox.setInformativeText("Please install \"urxvt-perls\" with your distributions package manager!");
-    msgBox.exec();
+    if(ui->lineEditBrowser->isEnabled())
+    {
+        // install urxvt-perls
+
+        QMessageBox msgBox;
+        msgBox.setText("External software necessary!!");
+        msgBox.setInformativeText("Please install \"urxvt-perls\" with your distributions package manager!");
+        msgBox.exec();
     }
 }
 
 void URXVTConfig::on_actionFrom_File_triggered()
 {
+
+    // imagemagick is necessary for this to work
 
     QProcess process;
     QString fileName = QFileDialog::getOpenFileName();
@@ -612,72 +647,75 @@ void URXVTConfig::on_actionFrom_File_triggered()
 
     QString stdout = process.readAllStandardOutput();
 
+
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor19->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor19, stdout.left(7));
+        ui->lineEditColor19->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor19, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor2->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor2, stdout.left(7));
+        ui->lineEditColor2->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor2, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor3->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor3, stdout.left(7));
+        ui->lineEditColor3->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor3, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor4->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor4, stdout.left(7));
+        ui->lineEditColor4->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor4, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor5->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor5, stdout.left(7));
+        ui->lineEditColor5->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor5, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor6->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor6, stdout.left(7));
+        ui->lineEditColor6->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor6, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor7->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor7, stdout.left(7));
+        ui->lineEditColor7->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor7, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor8->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor8, stdout.left(7));
+        ui->lineEditColor8->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor8, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor9->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor9, stdout.left(7));
+        ui->lineEditColor9->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor9, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor10->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor10, stdout.left(7));
+        ui->lineEditColor10->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor10, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor11->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor11, stdout.left(7));
+        ui->lineEditColor11->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor11, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor12->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor12, stdout.left(7));
+        ui->lineEditColor12->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor12, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor13->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor13, stdout.left(7));
+        ui->lineEditColor13->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor13, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor14->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor14, stdout.left(7));
+        ui->lineEditColor14->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor14, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor15->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor15, stdout.left(7));
+        ui->lineEditColor15->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor15, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor16->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor16, stdout.left(7));
+        ui->lineEditColor16->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor16, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor17->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor17, stdout.left(7));
-    ui->lineEditColor19->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor19, stdout.left(7));
+        ui->lineEditColor17->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor17, stdout.left(7));
+        ui->lineEditColor19->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor19, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor18->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor18, stdout.left(7));
+        ui->lineEditColor18->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor18, stdout.left(7));
     stdout.remove(0,stdout.indexOf('#', 3));
-    ui->lineEditColor1->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor1, stdout.left(7));
-    ui->lineEditColor3->setText(stdout.left(7));
-    setColorDefault(ui->lineEditColor3, stdout.left(7));
+        ui->lineEditColor1->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor1, stdout.left(7));
+        ui->lineEditColor3->setText(stdout.left(7));
+        setColorDefault(ui->lineEditColor3, stdout.left(7));
 
 }
 
 void URXVTConfig::on_actionHelp_triggered()
 {
+    // Help box
+
     QMessageBox msgBox;
     msgBox.setText("Help");
     msgBox.setInformativeText("The \"Help\" button offers all the information necessary.\n\nNew: Changes all options to default values.\nLoad: Loads existing ~.Xdefaults file, it may not work given how different the configuration might be.\nFrom file: Generates a color scheme from an image using imagemagick.\nSave: Saves current settings to ~.Xdefaults.");
@@ -686,6 +724,8 @@ void URXVTConfig::on_actionHelp_triggered()
 
 void URXVTConfig::on_actionAbout_triggered()
 {
+    // About box
+
     QMessageBox msgBox;
     msgBox.setText("About");
     msgBox.setInformativeText("(c) URXVTConfig by Dawid 'daedreth' Eckert\n\nURXVTConfig is a tool intended for configuration of the rxvt-unicode terminal.\n\nThis is achieved by editing the ~/.Xdefaults file.");
@@ -694,5 +734,7 @@ void URXVTConfig::on_actionAbout_triggered()
 
 void URXVTConfig::on_actionQuit_triggered()
 {
+    // Quit the application
+
     QApplication::quit();
 }
