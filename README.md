@@ -1,6 +1,8 @@
 # URXVTConfig
 A graphical user interface tool for configuration of the rxvt-unicode terminal emulator.
 
+THIS SOFTWARE OVERWRITES YOUR ~.XDEFAULTS FILE
+
 
 # How-to
 The "Help" button offers all the information necessary.
