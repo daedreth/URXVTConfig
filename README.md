@@ -11,9 +11,11 @@ The "Help" button offers all the information necessary.
 
 > From file: Generates a color scheme from an image using imagemagick.
 
+> Theme Browser: Select a preset color scheme to save or edit as you see fit.
+
 > Save: Saves current settings to ~.Xdefaults.
 
-> Help: You should click that.
+> Help: You should click that. Alternatively read this file.
 
 > About: You guessed it.
 

@@ -782,7 +782,7 @@ void URXVTConfig::on_actionHelp_triggered()
 
     QMessageBox msgBox;
     msgBox.setText("Help");
-    msgBox.setInformativeText("The \"Help\" button offers all the information necessary.\n\nNew: Changes all options to default values.\nLoad: Loads existing ~.Xdefaults file, it may not work given how different the configuration might be.\nFrom file: Generates a color scheme from an image using imagemagick.\nSave: Saves current settings to ~.Xdefaults.");
+    msgBox.setInformativeText("\nNew: Changes all options to default values.\n\nLoad: Loads existing ~.Xdefaults file, it may not work given how different the configuration might be.\n\nFrom file: Generates a color scheme from an image using imagemagick.\n\nTheme Browser: Select a preset color scheme to save or edit as you see fit.\n\nSave: Saves current settings to ~.Xdefaults.");
     msgBox.exec();
 }
 
