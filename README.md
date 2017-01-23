@@ -1,7 +1,7 @@
 # URXVTConfig
 A graphical user interface tool for configuration of the rxvt-unicode terminal emulator.
 
-THIS SOFTWARE OVERWRITES YOUR ~.XDEFAULTS FILE
+THIS SOFTWARE MAY OVERWRITE YOUR CONFIGURATION FILES!
 
 
 # How-to
@@ -9,15 +9,23 @@ The "Help" button offers all the information necessary.
 
 > New: Changes all options to default values.
 
-> Load: Loads existing ~.Xdefaults file, it may not work given how different the configuration might be.
+> Load from file: Loads existing configuration file, it may not work given how different the configuration might be.
+
+> Load .Xdefaults: Same as above, loads the Xdefaults file.
+
+> Load .Xresources: Same as above, loads the Xresources file.
 
 > From file: Generates a color scheme from an image using imagemagick.
 
 > Theme Browser: Select a preset color scheme to save or edit as you see fit.
 
-> Save: Saves current settings to ~.Xdefaults.
+> Save to file: Saves current settings to ~.Xdefaults.
 
-> Help: You should click that. Alternatively read this file.
+> Save to .Xdefaults: Same as above, saves to the Xdefaults file.
+
+> Save to .Xresources: Same as above, saves to the Xresources file.
+
+> Help: Sends you to read this file.
 
 > About: You guessed it.
 
@@ -33,7 +41,7 @@ It also requires rxvt-unicode to be built with "xft" support.
 If you do not know what this means, don't worry about it.
 
 # Build it yourself
-Requires qt4.
+Requires qt4 and is highly encouraged.
 
   ~~~ sh
   $ git clone https://github.com/daedreth/URXVTConfig.git

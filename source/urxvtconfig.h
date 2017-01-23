@@ -88,6 +88,14 @@ private slots:
 
     void on_actionEmbers_Light_triggered();
 
+    void on_actionSave_to_Xresources_triggered();
+
+    void on_actionSave_to_custom_file_triggered();
+
+    void on_actionLoad_from_Xresourced_triggered();
+
+    void on_actionLoad_from_Xdefaults_triggered();
+
 private:
     Ui::URXVTConfig *ui;
 };

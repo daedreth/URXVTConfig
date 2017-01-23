@@ -29,8 +29,9 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
     ui->checkBoxTabs->setChecked(false);
 }
 
-// setting up the filepath
+// setting up the filepaths
 QString pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
+QString pathToFileResources = "/home/"+ qgetenv("USER") +"/.Xresources";
 
 URXVTConfig::~URXVTConfig()
 {
@@ -233,13 +234,15 @@ void URXVTConfig::on_actionNew_triggered()
 
 void URXVTConfig::on_actionOpen_triggered()
 {
-    QFile file(pathToFile);
+    QString openFileName = QFileDialog::getOpenFileName();
+
+    QFile file(openFileName);
 
     if (!file.open(QIODevice::ReadOnly))
     {
         QMessageBox msgBox;
-        msgBox.setText("Unable to open/write to ~/.Xdefaults.");
-        msgBox.setInformativeText("Assure you have permissions to modify the file or that the file exists!");
+        msgBox.setText("Unable to open file!");
+        msgBox.setInformativeText("Ensure you have permissions to modify the file or that the file exists!");
         msgBox.exec();
     }else{
     for(int i = 0; i < 100; i++)
@@ -782,7 +785,7 @@ void URXVTConfig::on_actionHelp_triggered()
 
     QMessageBox msgBox;
     msgBox.setText("Help");
-    msgBox.setInformativeText("\nNew: Changes all options to default values.\n\nLoad: Loads existing ~.Xdefaults file, it may not work given how different the configuration might be.\n\nFrom file: Generates a color scheme from an image using imagemagick.\n\nTheme Browser: Select a preset color scheme to save or edit as you see fit.\n\nSave: Saves current settings to ~.Xdefaults.");
+    msgBox.setInformativeText("Visit the GitHub page for more information!\n\n\nhttp://github.com/daedreth/URXVTConfig");
     msgBox.exec();
 }
 
@@ -792,7 +795,7 @@ void URXVTConfig::on_actionAbout_triggered()
 
     QMessageBox msgBox;
     msgBox.setText("About");
-    msgBox.setInformativeText("(c) URXVTConfig by Dawid 'daedreth' Eckert\n\nURXVTConfig is a tool intended for configuration of the rxvt-unicode terminal.\n\nThis is achieved by editing the ~/.Xdefaults file.");
+    msgBox.setInformativeText("(c) URXVTConfig by Dawid 'daedreth' Eckert\n\nURXVTConfig is a tool intended for configuration of the rxvt-unicode terminal.");
     msgBox.exec();
 }
 
@@ -856,5 +859,553 @@ void URXVTConfig::on_actionEmbers_Light_triggered()
 {
     QString preset = "#433b32,#dbd6d1,#433b32,#16130f,#5a5047,#826d57,#826d57,#57826d,#57826d,#6d8257,#6d8257,#6d5782,#6d5782,#82576d,#82576d,#576d82,#576d82,#a39a90,#dbd6d1";
     loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionSave_to_Xresources_triggered()
+{
+
+    QFile file(pathToFileResources);
+
+    if (!file.open(QIODevice::ReadWrite) )
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Unable to open/write to ~/.Xresources");
+        msgBox.setInformativeText("Ensure you have permissions to modify the file.");
+        msgBox.exec();
+    }else{
+        file.remove();
+        file.close();
+        file.open(QIODevice::ReadWrite);
+
+        // Open stream in order to write to file
+
+        QTextStream initialMessage(&file);
+        initialMessage << "##### THIS FILE IS BEING CURRENTLY MANAGED BY URXVTCONFIG #####" << endl;
+        initialMessage << "##### CHANGES DONE TO THIS FILE MANUALLY MAY AFFECT THE FUNCTIONALITY ######" << endl;
+        initialMessage << "##### PROCEED WITH CAUTION! #####" << endl << endl;
+        file.close();
+
+        // Reopen the file to prevent errors
+
+        file.open(QIODevice::Append);
+        QTextStream stream(&file);
+
+        stream << "! special colors" << endl;
+        stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
+        stream << "*.background:  " << ui->lineEditColor2->text() << endl;
+        stream << "*.cursorColor  " << ui->lineEditColor3->text() << endl;
+        stream << "! black" << endl;
+        stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
+        stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
+        stream << "! red" << endl;
+        stream << "*.color1:      " << ui->lineEditColor6->text() << endl;
+        stream << "*.color9:      " << ui->lineEditColor7->text() << endl;
+        stream << "! green" << endl;
+        stream << "*.color2:      " << ui->lineEditColor8->text() << endl;
+        stream << "*.color10:     " << ui->lineEditColor9->text() << endl;
+        stream << "! yellow" << endl;
+        stream << "*.color3:      " << ui->lineEditColor10->text() << endl;
+        stream << "*.color11:     " << ui->lineEditColor11->text() << endl;
+        stream << "! blue" << endl;
+        stream << "*.color4:      " << ui->lineEditColor12->text() << endl;
+        stream << "*.color12:     " << ui->lineEditColor13->text() << endl;
+        stream << "! magenta" << endl;
+        stream << "*.color5:      " << ui->lineEditColor14->text() << endl;
+        stream << "*.color13:     " << ui->lineEditColor15->text() << endl;
+        stream << "! cyan" << endl;
+        stream << "*.color6:      " << ui->lineEditColor16->text() << endl;
+        stream << "*.color14:     " << ui->lineEditColor17->text() << endl;
+        stream << "! white" << endl;
+        stream << "*.color7:      " << ui->lineEditColor18->text() << endl;
+        stream << "*.color15:     " << ui->lineEditColor19->text() << endl << endl;
+
+        // Scrollbar
+
+        if(ui->checkBoxScrollbarEnabled->isChecked())
+        {
+            stream << "URxvt*scrollBar:     true" << endl;
+        }else{
+            stream << "URxvt*scrollBar:     false" << endl << endl;
+        }
+        if(ui->checkBoxScrollbarRight->isChecked())
+        {
+            stream << "URxvt*scrollBar_right:   true" << endl;
+        }else{
+            stream << "URxvt*scrollBar_right:   false" << endl << endl;
+        }
+
+        // Transparency
+
+        if(ui->checkBoxTransparencyEnabled->isChecked()){
+            stream << "URxvt*transparent:   true" << endl;
+            stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
+        }else{
+            stream << "URxvt*transparent:   false" << endl << endl;
+        }
+
+        // Font
+
+        QString current = ui->fontComboBox->currentFont().toString();
+        current.chop(20);
+        stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl << endl;
+
+        if(ui->checkBoxFontBoldDisable->isChecked()){
+            stream << "URxvt.boldFont:" << endl;
+        }
+
+        stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl;
+
+        if(ui->checkBoxFontAntialiasing->isChecked())
+        {
+            stream << "*antialias:  true" << endl;
+        }else{
+            stream << "*antialias:  false" << endl;
+        }
+
+        if(ui->checkBoxFontHinting->isChecked())
+        {
+            stream << "*autohint:  true" << endl;
+        }else{
+            stream << "*autohint:  false" << endl << endl;
+        }
+
+        // Plugins
+
+        if(ui->checkBoxClickableUrls->isChecked())
+        {
+            stream << "URxvt.perl-ext-common: default,matcher" << endl;
+            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text() << endl;
+            stream << "URxvt.matcher.button: 1" << endl << endl;
+        }
+
+        if(ui->checkBoxTabs->isChecked())
+        {
+            // this uses colors already defined above for some reason
+
+            stream << "URxvt.perl-ext-common: ...,tabbed,..." << endl;
+            stream << "URxvt.tabbed.tabbar-fg: 2" << endl;
+            stream << "URxvt.tabbed.tabbar-bg: 0" << endl;
+            stream << "URxvt.tabbed.tab-fg: 3" << endl;
+            stream << "URxvt.tabbed.tab-bg: 2" << endl;
+        }
+
+        file.close();
+
+        // Confirmation message
+
+        QMessageBox msgBox;
+        msgBox.setText("Changes saved!");
+        msgBox.exec();
+
+    }
+}
+
+void URXVTConfig::on_actionSave_to_custom_file_triggered()
+{
+    QString saveFileName = QFileDialog::getSaveFileName();
+
+
+    QFile file(saveFileName);
+
+    if (!file.open(QIODevice::ReadWrite) )
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Unable to open your selected file!");
+        msgBox.setInformativeText("Ensure you have permissions to modify the file.");
+        msgBox.exec();
+    }else{
+        file.remove();
+        file.close();
+        file.open(QIODevice::ReadWrite);
+
+        // Open stream in order to write to file
+
+        QTextStream initialMessage(&file);
+        initialMessage << "##### THIS FILE IS BEING CURRENTLY MANAGED BY URXVTCONFIG #####" << endl;
+        initialMessage << "##### CHANGES DONE TO THIS FILE MANUALLY MAY AFFECT THE FUNCTIONALITY ######" << endl;
+        initialMessage << "##### PROCEED WITH CAUTION! #####" << endl << endl;
+        file.close();
+
+        // Reopen the file to prevent errors
+
+        file.open(QIODevice::Append);
+        QTextStream stream(&file);
+
+        stream << "! special colors" << endl;
+        stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
+        stream << "*.background:  " << ui->lineEditColor2->text() << endl;
+        stream << "*.cursorColor  " << ui->lineEditColor3->text() << endl;
+        stream << "! black" << endl;
+        stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
+        stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
+        stream << "! red" << endl;
+        stream << "*.color1:      " << ui->lineEditColor6->text() << endl;
+        stream << "*.color9:      " << ui->lineEditColor7->text() << endl;
+        stream << "! green" << endl;
+        stream << "*.color2:      " << ui->lineEditColor8->text() << endl;
+        stream << "*.color10:     " << ui->lineEditColor9->text() << endl;
+        stream << "! yellow" << endl;
+        stream << "*.color3:      " << ui->lineEditColor10->text() << endl;
+        stream << "*.color11:     " << ui->lineEditColor11->text() << endl;
+        stream << "! blue" << endl;
+        stream << "*.color4:      " << ui->lineEditColor12->text() << endl;
+        stream << "*.color12:     " << ui->lineEditColor13->text() << endl;
+        stream << "! magenta" << endl;
+        stream << "*.color5:      " << ui->lineEditColor14->text() << endl;
+        stream << "*.color13:     " << ui->lineEditColor15->text() << endl;
+        stream << "! cyan" << endl;
+        stream << "*.color6:      " << ui->lineEditColor16->text() << endl;
+        stream << "*.color14:     " << ui->lineEditColor17->text() << endl;
+        stream << "! white" << endl;
+        stream << "*.color7:      " << ui->lineEditColor18->text() << endl;
+        stream << "*.color15:     " << ui->lineEditColor19->text() << endl << endl;
+
+        // Scrollbar
+
+        if(ui->checkBoxScrollbarEnabled->isChecked())
+        {
+            stream << "URxvt*scrollBar:     true" << endl;
+        }else{
+            stream << "URxvt*scrollBar:     false" << endl << endl;
+        }
+        if(ui->checkBoxScrollbarRight->isChecked())
+        {
+            stream << "URxvt*scrollBar_right:   true" << endl;
+        }else{
+            stream << "URxvt*scrollBar_right:   false" << endl << endl;
+        }
+
+        // Transparency
+
+        if(ui->checkBoxTransparencyEnabled->isChecked()){
+            stream << "URxvt*transparent:   true" << endl;
+            stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
+        }else{
+            stream << "URxvt*transparent:   false" << endl << endl;
+        }
+
+        // Font
+
+        QString current = ui->fontComboBox->currentFont().toString();
+        current.chop(20);
+        stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl << endl;
+
+        if(ui->checkBoxFontBoldDisable->isChecked()){
+            stream << "URxvt.boldFont:" << endl;
+        }
+
+        stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl;
+
+        if(ui->checkBoxFontAntialiasing->isChecked())
+        {
+            stream << "*antialias:  true" << endl;
+        }else{
+            stream << "*antialias:  false" << endl;
+        }
+
+        if(ui->checkBoxFontHinting->isChecked())
+        {
+            stream << "*autohint:  true" << endl;
+        }else{
+            stream << "*autohint:  false" << endl << endl;
+        }
+
+        // Plugins
+
+        if(ui->checkBoxClickableUrls->isChecked())
+        {
+            stream << "URxvt.perl-ext-common: default,matcher" << endl;
+            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text() << endl;
+            stream << "URxvt.matcher.button: 1" << endl << endl;
+        }
+
+        if(ui->checkBoxTabs->isChecked())
+        {
+            // this uses colors already defined above for some reason
+
+            stream << "URxvt.perl-ext-common: ...,tabbed,..." << endl;
+            stream << "URxvt.tabbed.tabbar-fg: 2" << endl;
+            stream << "URxvt.tabbed.tabbar-bg: 0" << endl;
+            stream << "URxvt.tabbed.tab-fg: 3" << endl;
+            stream << "URxvt.tabbed.tab-bg: 2" << endl;
+        }
+
+        file.close();
+
+        // Confirmation message
+
+        QMessageBox msgBox;
+        msgBox.setText("Changes saved!");
+        msgBox.exec();
+
+    }
+}
+
+void URXVTConfig::on_actionLoad_from_Xresourced_triggered()
+{
+
+
+    QFile file(pathToFileResources);
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Unable to open ~/.Xresources.");
+        msgBox.setInformativeText("Ensure you have permissions to modify the file or that the file exists!");
+        msgBox.exec();
+    }else{
+    for(int i = 0; i < 100; i++)
+    {
+        QString line = file.readLine();
+
+        if (line.startsWith("!") || line.startsWith("#"))
+        {
+            // this deals with commented out lines
+            continue;
+
+        }else if(line.startsWith("*.foreground")){
+            ui->lineEditColor1->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor1);
+        }else if(line.startsWith("*.background")){
+            ui->lineEditColor2->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor2);
+        }else if(line.startsWith("*.cursorColor")){
+            ui->lineEditColor3->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor3);
+        }else if(line.startsWith("*.color0")){
+            ui->lineEditColor4->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor4);
+        }else if(line.startsWith("*.color8")){
+            ui->lineEditColor5->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor5);
+        }else if(line.startsWith("*.color15")){
+            ui->lineEditColor19->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor19);
+        }else if(line.startsWith("*.color9")){
+            ui->lineEditColor7->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor7);
+        }else if(line.startsWith("*.color2")){
+            ui->lineEditColor8->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor8);
+        }else if(line.startsWith("*.color10")){
+            ui->lineEditColor9->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor9);
+        }else if(line.startsWith("*.color3")){
+            ui->lineEditColor10->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor10);
+        }else if(line.startsWith("*.color11")){
+            ui->lineEditColor11->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor11);
+        }else if(line.startsWith("*.color4")){
+            ui->lineEditColor12->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor12);
+        }else if(line.startsWith("*.color12")){
+            ui->lineEditColor13->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor13);
+        }else if(line.startsWith("*.color5")){
+            ui->lineEditColor14->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor14);
+        }else if(line.startsWith("*.color13")){
+            ui->lineEditColor15->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor15);
+        }else if(line.startsWith("*.color6")){
+            ui->lineEditColor16->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor16);
+        }else if(line.startsWith("*.color14")){
+            ui->lineEditColor17->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor17);
+        }else if(line.startsWith("*.color7")){
+            ui->lineEditColor18->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor18);
+        }else if(line.startsWith("*.color1")){
+            ui->lineEditColor6->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor6);
+
+            // Transparency
+
+        }else if(line.startsWith("URxvt*tran")){
+            line = line.mid(line.length()-5,4);
+            if(line == "true") ui->checkBoxTransparencyEnabled->setChecked(true);
+            else ui->checkBoxTransparencyEnabled->setChecked(false);
+        }else if(line.startsWith("URxvt*shad")){
+            line = line.mid(line.length()-3,2);
+            ui->spinBoxShading->setValue(line.toInt());
+
+            // Scrollbar
+
+        }else if(line.startsWith("URxvt*scrollBar_")){
+            // this does nothing, like the government, but is necessary
+            // just like the government
+        }else if(line.startsWith("URxvt*scrollB")){
+            line = line.mid(line.length()-5,4);
+            if(line == "true") ui->checkBoxScrollbarEnabled->setChecked(true);
+            else ui->checkBoxScrollbarEnabled->setChecked(false);
+
+            // Font
+
+        }else if(line.startsWith("URxvt.font:")){
+            ui->spinBoxFontSize->setValue(line.mid(line.length()-3, 2).toInt());
+            line = line.mid(16);
+            ui->labelCurrentFont->setText(line.left(line.length() - 14));
+        }else if(line.startsWith("URxvt.boldFont:")){
+            ui->checkBoxFontBoldDisable->setChecked(true);
+        }else if(line.startsWith("URxvt.letterSpa")){
+            line = line.mid(line.length()-3,2);
+            ui->spinBoxFontSpacing->setValue(line.toInt());
+        }else if(line.startsWith("*antialias:")){
+            line = line.mid(line.length()-5,4);
+            if(line == "true") ui->checkBoxFontAntialiasing->setChecked(true);
+            else ui->checkBoxFontAntialiasing->setChecked(false);
+        }else if(line.startsWith("*autohint")){
+            line = line.mid(line.length()-5,4);
+            if(line == "true") ui->checkBoxFontHinting->setChecked(true);
+            else ui->checkBoxFontHinting->setChecked(false);
+
+            // Plugins
+
+        }else if(line.startsWith("URxvt.url-launcher")){
+            ui->checkBoxClickableUrls->setChecked(true);
+            ui->lineEditBrowser->setText(line.mid(20));
+        }else if(line.startsWith("URxvt.perl-ext-common: ...,tab")){
+            ui->checkBoxTabs->setChecked(true);
+        }
+    }
+}
+    file.close();
+    updatePreview();
+}
+
+void URXVTConfig::on_actionLoad_from_Xdefaults_triggered()
+{
+
+
+    QFile file(pathToFile);
+
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Unable to open ~/.Xdefaults.");
+        msgBox.setInformativeText("Ensure you have permissions to modify the file or that the file exists!");
+        msgBox.exec();
+    }else{
+    for(int i = 0; i < 100; i++)
+    {
+        QString line = file.readLine();
+
+        if (line.startsWith("!") || line.startsWith("#"))
+        {
+            // this deals with commented out lines
+            continue;
+
+        }else if(line.startsWith("*.foreground")){
+            ui->lineEditColor1->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor1);
+        }else if(line.startsWith("*.background")){
+            ui->lineEditColor2->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor2);
+        }else if(line.startsWith("*.cursorColor")){
+            ui->lineEditColor3->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor3);
+        }else if(line.startsWith("*.color0")){
+            ui->lineEditColor4->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor4);
+        }else if(line.startsWith("*.color8")){
+            ui->lineEditColor5->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor5);
+        }else if(line.startsWith("*.color15")){
+            ui->lineEditColor19->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor19);
+        }else if(line.startsWith("*.color9")){
+            ui->lineEditColor7->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor7);
+        }else if(line.startsWith("*.color2")){
+            ui->lineEditColor8->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor8);
+        }else if(line.startsWith("*.color10")){
+            ui->lineEditColor9->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor9);
+        }else if(line.startsWith("*.color3")){
+            ui->lineEditColor10->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor10);
+        }else if(line.startsWith("*.color11")){
+            ui->lineEditColor11->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor11);
+        }else if(line.startsWith("*.color4")){
+            ui->lineEditColor12->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor12);
+        }else if(line.startsWith("*.color12")){
+            ui->lineEditColor13->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor13);
+        }else if(line.startsWith("*.color5")){
+            ui->lineEditColor14->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor14);
+        }else if(line.startsWith("*.color13")){
+            ui->lineEditColor15->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor15);
+        }else if(line.startsWith("*.color6")){
+            ui->lineEditColor16->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor16);
+        }else if(line.startsWith("*.color14")){
+            ui->lineEditColor17->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor17);
+        }else if(line.startsWith("*.color7")){
+            ui->lineEditColor18->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor18);
+        }else if(line.startsWith("*.color1")){
+            ui->lineEditColor6->setText(line.mid(line.length()-8,7));
+            setColorFromLoad(line.mid(line.length()-8,7), ui->lineEditColor6);
+
+            // Transparency
+
+        }else if(line.startsWith("URxvt*tran")){
+            line = line.mid(line.length()-5,4);
+            if(line == "true") ui->checkBoxTransparencyEnabled->setChecked(true);
+            else ui->checkBoxTransparencyEnabled->setChecked(false);
+        }else if(line.startsWith("URxvt*shad")){
+            line = line.mid(line.length()-3,2);
+            ui->spinBoxShading->setValue(line.toInt());
+
+            // Scrollbar
+
+        }else if(line.startsWith("URxvt*scrollBar_")){
+            // this does nothing, like the government, but is necessary
+            // just like the government
+        }else if(line.startsWith("URxvt*scrollB")){
+            line = line.mid(line.length()-5,4);
+            if(line == "true") ui->checkBoxScrollbarEnabled->setChecked(true);
+            else ui->checkBoxScrollbarEnabled->setChecked(false);
+
+            // Font
+
+        }else if(line.startsWith("URxvt.font:")){
+            ui->spinBoxFontSize->setValue(line.mid(line.length()-3, 2).toInt());
+            line = line.mid(16);
+            ui->labelCurrentFont->setText(line.left(line.length() - 14));
+        }else if(line.startsWith("URxvt.boldFont:")){
+            ui->checkBoxFontBoldDisable->setChecked(true);
+        }else if(line.startsWith("URxvt.letterSpa")){
+            line = line.mid(line.length()-3,2);
+            ui->spinBoxFontSpacing->setValue(line.toInt());
+        }else if(line.startsWith("*antialias:")){
+            line = line.mid(line.length()-5,4);
+            if(line == "true") ui->checkBoxFontAntialiasing->setChecked(true);
+            else ui->checkBoxFontAntialiasing->setChecked(false);
+        }else if(line.startsWith("*autohint")){
+            line = line.mid(line.length()-5,4);
+            if(line == "true") ui->checkBoxFontHinting->setChecked(true);
+            else ui->checkBoxFontHinting->setChecked(false);
+
+            // Plugins
+
+        }else if(line.startsWith("URxvt.url-launcher")){
+            ui->checkBoxClickableUrls->setChecked(true);
+            ui->lineEditBrowser->setText(line.mid(20));
+        }else if(line.startsWith("URxvt.perl-ext-common: ...,tab")){
+            ui->checkBoxTabs->setChecked(true);
+        }
+    }
+}
+    file.close();
     updatePreview();
 }
