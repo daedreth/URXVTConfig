@@ -632,6 +632,70 @@ void URXVTConfig::on_checkBoxClickableUrls_clicked()
     }
 }
 
+void URXVTConfig::loadPreset(QString preset)
+{
+
+    QString presetString = preset;
+
+    presetString.remove(0,presetString.indexOf('#'));
+    ui->lineEditColor1->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor1, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor2->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor2, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor3->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor3, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor4->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor4, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor5->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor5, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor6->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor6, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor7->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor7, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor8->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor8, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor9->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor9, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor10->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor10, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor11->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor11, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor12->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor12, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor13->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor13, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor14->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor14, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor15->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor15, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor16->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor16, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor17->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor17, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor18->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor18, presetString.left(7));
+    presetString.remove(0,presetString.indexOf('#', 3));
+    ui->lineEditColor19->setText(presetString.left(7));
+    setColorDefault(ui->lineEditColor19, presetString.left(7));
+}
+
 void URXVTConfig::on_actionFrom_File_triggered()
 {
 
@@ -737,4 +801,60 @@ void URXVTConfig::on_actionQuit_triggered()
     // Quit the application
 
     QApplication::quit();
+}
+
+void URXVTConfig::on_actionSolarized_Dark_triggered()
+{
+    QString preset = "#93a1a1,#002b36,#93a1a1,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionSolarized_Light_triggered()
+{
+    QString preset = "#586e75,#fdf6e3,#586e75,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionGreyscale_Dark_triggered()
+{
+    QString preset = "#b9b9b9,#101010,#b9b9b9,#101010,#525252,#7c7c7c,#7c7c7c,#8e8e8e,#8e8e8e,#a0a0a0,#a0a0a0,#686868,#686868,#747474,#747474,#868686,#868686,#b9b9b9,#f7f7f7";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionGreyscale_Light_triggered()
+{
+    QString preset = "#464646,#f7f7f7,#464646,#101010,#525252,#7c7c7c,#7c7c7c,#8e8e8e,#8e8e8e,#a0a0a0,#a0a0a0,#686868,#686868,#747474,#747474,#868686,#868686,#b9b9b9,#f7f7f7";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionCodeschool_Dark_triggered()
+{
+    QString preset = "#9ea7a6,#232c31,#9ea7a6,#232c31,#3f4944,#2a5491,#2a5491,#237986,#237986,#a03b1e,#a03b1e,#484d79,#484d79,#c59820,#c59820,#b02f30,#b02f30,#9ea7a6,#b5d8f6";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionCodeschool_Light_triggered()
+{
+    QString preset = "#2a343a,#b5d8f6,#2a343a,#232c31,#3f4944,#2a5491,#2a5491,#237986,#237986,#a03b1e,#a03b1e,#484d79,#484d79,#c59820,#c59820,#b02f30,#b02f30,#9ea7a6,#b5d8f6";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionEmbers_Dark_triggered()
+{
+    QString preset = "#a39a90,#16130f,#a39a90,#16130f,#5a5047,#826d57,#826d57,#57826d,#57826d,#6d8257,#6d8257,#6d5782,#6d5782,#82576d,#82576d,#576d82,#576d82,#a39a90,#dbd6d1";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionEmbers_Light_triggered()
+{
+    QString preset = "#433b32,#dbd6d1,#433b32,#16130f,#5a5047,#826d57,#826d57,#57826d,#57826d,#6d8257,#6d8257,#6d5782,#6d5782,#82576d,#82576d,#576d82,#576d82,#a39a90,#dbd6d1";
+    loadPreset(preset);
+    updatePreview();
 }

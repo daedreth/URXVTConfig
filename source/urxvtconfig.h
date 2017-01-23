@@ -15,6 +15,7 @@ public:
     explicit URXVTConfig(QWidget *parent = 0);
     ~URXVTConfig();
     void updatePreview();
+    void loadPreset(QString preset);
 
 private slots:
     void on_actionNew_triggered();
@@ -70,6 +71,22 @@ private slots:
     void on_actionAbout_triggered();
 
     void on_actionQuit_triggered();
+
+    void on_actionSolarized_Dark_triggered();
+
+    void on_actionSolarized_Light_triggered();
+
+    void on_actionGreyscale_Dark_triggered();
+
+    void on_actionGreyscale_Light_triggered();
+
+    void on_actionCodeschool_Dark_triggered();
+
+    void on_actionCodeschool_Light_triggered();
+
+    void on_actionEmbers_Dark_triggered();
+
+    void on_actionEmbers_Light_triggered();
 
 private:
     Ui::URXVTConfig *ui;

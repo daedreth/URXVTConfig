@@ -712,7 +712,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>220</x>
@@ -929,7 +929,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>221</x>
@@ -997,11 +997,29 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuTheme_Browser">
+     <property name="title">
+      <string>Theme Browser</string>
+     </property>
+     <addaction name="actionSolarized_Dark"/>
+     <addaction name="actionSolarized_Light"/>
+     <addaction name="separator"/>
+     <addaction name="actionGreyscale_Dark"/>
+     <addaction name="actionGreyscale_Light"/>
+     <addaction name="separator"/>
+     <addaction name="actionCodeschool_Dark"/>
+     <addaction name="actionCodeschool_Light"/>
+     <addaction name="separator"/>
+     <addaction name="actionEmbers_Dark"/>
+     <addaction name="actionEmbers_Light"/>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
-    <addaction name="actionFrom_File"/>
     <addaction name="actionSave"/>
+    <addaction name="separator"/>
+    <addaction name="actionFrom_File"/>
+    <addaction name="menuTheme_Browser"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -1053,6 +1071,46 @@
   <action name="actionFrom_File">
    <property name="text">
     <string>From File...</string>
+   </property>
+  </action>
+  <action name="actionSolarized_Dark">
+   <property name="text">
+    <string>Solarized Dark</string>
+   </property>
+  </action>
+  <action name="actionSolarized_Light">
+   <property name="text">
+    <string>Solarized Light</string>
+   </property>
+  </action>
+  <action name="actionGreyscale_Dark">
+   <property name="text">
+    <string>Greyscale Dark</string>
+   </property>
+  </action>
+  <action name="actionGreyscale_Light">
+   <property name="text">
+    <string>Greyscale Light</string>
+   </property>
+  </action>
+  <action name="actionCodeschool_Dark">
+   <property name="text">
+    <string>Codeschool Dark</string>
+   </property>
+  </action>
+  <action name="actionCodeschool_Light">
+   <property name="text">
+    <string>Codeschool Light</string>
+   </property>
+  </action>
+  <action name="actionEmbers_Dark">
+   <property name="text">
+    <string>Embers Dark</string>
+   </property>
+  </action>
+  <action name="actionEmbers_Light">
+   <property name="text">
+    <string>Embers Light</string>
    </property>
   </action>
  </widget>
