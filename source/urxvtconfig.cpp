@@ -399,7 +399,7 @@ void URXVTConfig::on_actionSave_triggered()
         stream << "! special colors" << endl;
         stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
         stream << "*.background:  " << ui->lineEditColor2->text() << endl;
-        stream << "*.cursorColor  " << ui->lineEditColor3->text() << endl;
+        stream << "*.cursorColor:  " << ui->lineEditColor3->text() << endl;
         stream << "! black" << endl;
         stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
         stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
@@ -894,7 +894,7 @@ void URXVTConfig::on_actionSave_to_Xresources_triggered()
         stream << "! special colors" << endl;
         stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
         stream << "*.background:  " << ui->lineEditColor2->text() << endl;
-        stream << "*.cursorColor  " << ui->lineEditColor3->text() << endl;
+        stream << "*.cursorColor:  " << ui->lineEditColor3->text() << endl;
         stream << "! black" << endl;
         stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
         stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
@@ -1035,7 +1035,7 @@ void URXVTConfig::on_actionSave_to_custom_file_triggered()
         stream << "! special colors" << endl;
         stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
         stream << "*.background:  " << ui->lineEditColor2->text() << endl;
-        stream << "*.cursorColor  " << ui->lineEditColor3->text() << endl;
+        stream << "*.cursorColor:  " << ui->lineEditColor3->text() << endl;
         stream << "! black" << endl;
         stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
         stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
