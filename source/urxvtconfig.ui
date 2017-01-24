@@ -801,14 +801,14 @@
        <item>
         <widget class="QCheckBox" name="checkBoxTransparencyEnabled">
          <property name="text">
-          <string>Enable Fake Transparency</string>
+          <string>Fake Transparency</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QCheckBox" name="checkBoxTrueTransparencyEnabled">
          <property name="text">
-          <string>Enable True Transparency</string>
+          <string>True Transparency</string>
          </property>
         </widget>
        </item>
@@ -895,7 +895,26 @@
         </widget>
        </item>
        <item>
-        <widget class="QFontComboBox" name="fontComboBox"/>
+        <widget class="QFontComboBox" name="fontComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>125</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>125</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>125</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

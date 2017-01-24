@@ -322,7 +322,6 @@ void URXVTConfig::on_actionOpen_triggered()
         }else if(line.startsWith("URxvt*de")){
             ui->checkBoxTrueTransparencyEnabled->setChecked(true);
         }else if(line.startsWith("URxvt.background: [")){
-            ui->pushButtonColor1->setText(line.mid(19,2));
             ui->horizontalSliderShading->setValue(line.mid(19,2).toInt());
 
 
@@ -1253,7 +1252,6 @@ void URXVTConfig::on_actionLoad_from_Xresourced_triggered()
         }else if(line.startsWith("URxvt*de")){
             ui->checkBoxTrueTransparencyEnabled->setChecked(true);
         }else if(line.startsWith("URxvt.background: [")){
-            ui->pushButtonColor1->setText(line.mid(19,2));
             ui->horizontalSliderShading->setValue(line.mid(19,2).toInt());
 
             // Scrollbar
@@ -1392,7 +1390,6 @@ void URXVTConfig::on_actionLoad_from_Xdefaults_triggered()
         }else if(line.startsWith("URxvt*de")){
             ui->checkBoxTrueTransparencyEnabled->setChecked(true);
         }else if(line.startsWith("URxvt.background: [")){
-            ui->pushButtonColor1->setText(line.mid(19,2));
             ui->horizontalSliderShading->setValue(line.mid(19,2).toInt());
 
             // Scrollbar
