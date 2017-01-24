@@ -20,9 +20,6 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
     QObject::connect(ui->horizontalSliderFontSize, SIGNAL(valueChanged(int)), ui->spinBoxFontSize, SLOT(setValue(int)));
     QObject::connect(ui->spinBoxFontSize, SIGNAL(valueChanged(int)), ui->horizontalSliderFontSize, SLOT(setValue(int)));
 
-    QObject::connect(ui->checkBoxTransparencyEnabled, SIGNAL(toggled(bool)), ui->horizontalSliderShading, SLOT(setEnabled(bool)));
-    QObject::connect(ui->checkBoxTransparencyEnabled, SIGNAL(toggled(bool)), ui->spinBoxShading, SLOT(setEnabled(bool)));
-
     QObject::connect(ui->checkBoxClickableUrls, SIGNAL(toggled(bool)), ui->lineEditBrowser, SLOT(setEnabled(bool)));
 
     ui->lineEditBrowser->setDisabled(true);
@@ -211,6 +208,7 @@ void URXVTConfig::on_actionNew_triggered()
     ui->checkBoxTransparencyEnabled->setChecked(false);
     ui->horizontalSliderShading->setValue(0);
     ui->horizontalSliderShading->setEnabled(false);
+    ui->checkBoxTrueTransparencyEnabled->setChecked(false);
 
     // Scrollbar reset
 
@@ -321,6 +319,12 @@ void URXVTConfig::on_actionOpen_triggered()
         }else if(line.startsWith("URxvt*shad")){
             line = line.mid(line.length()-3,2);
             ui->spinBoxShading->setValue(line.toInt());
+        }else if(line.startsWith("URxvt*de")){
+            ui->checkBoxTrueTransparencyEnabled->setChecked(true);
+        }else if(line.startsWith("URxvt.background: [")){
+            ui->pushButtonColor1->setText(line.mid(19,2));
+            ui->horizontalSliderShading->setValue(line.mid(19,2).toInt());
+
 
             // Scrollbar
 
@@ -447,6 +451,11 @@ void URXVTConfig::on_actionSave_triggered()
             stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
         }else{
             stream << "URxvt*transparent:   false" << endl << endl;
+        }
+
+        if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
+            stream << "URxvt*depth: 32" << endl;
+            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl;
         }
 
         // Font
@@ -944,6 +953,11 @@ void URXVTConfig::on_actionSave_to_Xresources_triggered()
             stream << "URxvt*transparent:   false" << endl << endl;
         }
 
+        if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
+            stream << "URxvt*depth: 32" << endl;
+            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl;
+        }
+
         // Font
 
         QString current = ui->fontComboBox->currentFont().toString();
@@ -1083,6 +1097,11 @@ void URXVTConfig::on_actionSave_to_custom_file_triggered()
             stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
         }else{
             stream << "URxvt*transparent:   false" << endl << endl;
+        }
+
+        if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
+            stream << "URxvt*depth: 32" << endl;
+            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl;
         }
 
         // Font
@@ -1231,6 +1250,11 @@ void URXVTConfig::on_actionLoad_from_Xresourced_triggered()
         }else if(line.startsWith("URxvt*shad")){
             line = line.mid(line.length()-3,2);
             ui->spinBoxShading->setValue(line.toInt());
+        }else if(line.startsWith("URxvt*de")){
+            ui->checkBoxTrueTransparencyEnabled->setChecked(true);
+        }else if(line.startsWith("URxvt.background: [")){
+            ui->pushButtonColor1->setText(line.mid(19,2));
+            ui->horizontalSliderShading->setValue(line.mid(19,2).toInt());
 
             // Scrollbar
 
@@ -1365,6 +1389,11 @@ void URXVTConfig::on_actionLoad_from_Xdefaults_triggered()
         }else if(line.startsWith("URxvt*shad")){
             line = line.mid(line.length()-3,2);
             ui->spinBoxShading->setValue(line.toInt());
+        }else if(line.startsWith("URxvt*de")){
+            ui->checkBoxTrueTransparencyEnabled->setChecked(true);
+        }else if(line.startsWith("URxvt.background: [")){
+            ui->pushButtonColor1->setText(line.mid(19,2));
+            ui->horizontalSliderShading->setValue(line.mid(19,2).toInt());
 
             // Scrollbar
 

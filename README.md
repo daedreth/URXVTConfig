@@ -71,7 +71,7 @@ Reset to default values and save to ensure functionality. This tool has a very l
 
 > Why is my transparency not working?
 
-Your composite manager may be disabled, but since we are using fake transparency, it should still work. Check your wallpaper setter.
+Your composite manager may be disabled. Try fake transparency.
 
 > I enabled certain plugins and they do nothing!
 
