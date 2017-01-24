@@ -162,6 +162,19 @@ void setColorFromLoad(QString colorString, QLineEdit *line)
 
 void URXVTConfig::on_actionNew_triggered()
 {
+
+    QMessageBox msgBox;
+    msgBox.setText("Warning!");
+    msgBox.setInformativeText("Change all values to default?");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Yes);
+    int ret = msgBox.exec();
+
+    if(ret == QMessageBox::No)
+    {
+        return;
+    }
+
     // Color reset
 
     ui->lineEditColor1->setText("#c5c8c6");
@@ -372,6 +385,18 @@ void URXVTConfig::on_actionOpen_triggered()
 
 void URXVTConfig::on_actionSave_triggered()
 {
+
+    QMessageBox msgBox;
+    msgBox.setText("Warning!");
+    msgBox.setInformativeText("Do you wish to overwrite your .Xdefaults?");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    int ret = msgBox.exec();
+
+    if(ret == QMessageBox::No)
+    {
+        return;
+    }
 
     QFile file(pathToFile);
 
@@ -872,6 +897,18 @@ void URXVTConfig::on_actionEmbers_Light_triggered()
 
 void URXVTConfig::on_actionSave_to_Xresources_triggered()
 {
+
+    QMessageBox msgBox;
+    msgBox.setText("Warning!");
+    msgBox.setInformativeText("Do you wish to overwrite your .Xresources?");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    int ret = msgBox.exec();
+
+    if(ret == QMessageBox::No)
+    {
+        return;
+    }
 
     QFile file(pathToFileResources);
 
