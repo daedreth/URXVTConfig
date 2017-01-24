@@ -895,6 +895,34 @@ void URXVTConfig::on_actionEmbers_Light_triggered()
     updatePreview();
 }
 
+void URXVTConfig::on_actionGreenscreen_Dark_triggered()
+{
+    QString preset = "#00bb00,#001100,#00bb00,#001100,#007700,#007700,#007700,#00bb00,#00bb00,#007700,#007700,#009900,#009900,#00bb00,#00bb00,#005500,#005500,#00bb00,#00ff00";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionGreenscreen_Light_triggered()
+{
+    QString preset = "#005500,#00ff00,#005500,#001100,#007700,#007700,#007700,#00bb00,#00bb00,#007700,#007700,#009900,#009900,#00bb00,#00bb00,#005500,#005500,#00bb00,#00ff00";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionMocha_Dark_triggered()
+{
+    QString preset = "#d0c8c6,#3b3228,#d0c8c6,#3b3228,#7e705a,#cb6077,#cb6077,#beb55b,#beb55b,#f4bc87,#f4bc87,#8ab3b5,#8ab3b5,#a89bb9,#a89bb9,#7bbda4,#7bbda4,#d0c8c6,f5eeeb";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionMocha_Light_triggered()
+{
+    QString preset = "#645240,#f5eeeb,#645240,#3b3228,#7e705a,#cb6077,#cb6077,#beb55b,#beb55b,#f4bc87,#f4bc87,#8ab3b5,#8ab3b5,#a89bb9,#a89bb9,#7bbda4,#7bbda4,#d0c8c6,f5eeeb";
+    loadPreset(preset);
+    updatePreview();
+}
+
 void URXVTConfig::on_actionSave_to_Xresources_triggered()
 {
 
@@ -1472,3 +1500,5 @@ void URXVTConfig::on_actionLoad_from_Xdefaults_triggered()
     file.close();
     updatePreview();
 }
+
+

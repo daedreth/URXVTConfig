@@ -1029,22 +1029,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuTheme_Browser">
-     <property name="title">
-      <string>Theme Browser</string>
-     </property>
-     <addaction name="actionSolarized_Dark"/>
-     <addaction name="actionSolarized_Light"/>
-     <addaction name="separator"/>
-     <addaction name="actionGreyscale_Dark"/>
-     <addaction name="actionGreyscale_Light"/>
-     <addaction name="separator"/>
-     <addaction name="actionCodeschool_Dark"/>
-     <addaction name="actionCodeschool_Light"/>
-     <addaction name="separator"/>
-     <addaction name="actionEmbers_Dark"/>
-     <addaction name="actionEmbers_Light"/>
-    </widget>
     <addaction name="actionNew"/>
     <addaction name="separator"/>
     <addaction name="actionOpen"/>
@@ -1056,7 +1040,6 @@
     <addaction name="actionSave_to_Xresources"/>
     <addaction name="separator"/>
     <addaction name="actionFrom_File"/>
-    <addaction name="menuTheme_Browser"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -1068,7 +1051,62 @@
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
    </widget>
+   <widget class="QMenu" name="menuPresets">
+    <property name="title">
+     <string>Presets</string>
+    </property>
+    <widget class="QMenu" name="menuSolarized">
+     <property name="title">
+      <string>Solarized</string>
+     </property>
+     <addaction name="separator"/>
+     <addaction name="actionSolarized_Dark"/>
+     <addaction name="actionSolarized_Light"/>
+    </widget>
+    <widget class="QMenu" name="menuCodeschool">
+     <property name="title">
+      <string>Codeschool</string>
+     </property>
+     <addaction name="actionCodeschool_Dark"/>
+     <addaction name="actionCodeschool_Light"/>
+    </widget>
+    <widget class="QMenu" name="menuEmbers">
+     <property name="title">
+      <string>Embers</string>
+     </property>
+     <addaction name="actionEmbers_Dark"/>
+     <addaction name="actionEmbers_Light"/>
+    </widget>
+    <widget class="QMenu" name="menuGreyscale">
+     <property name="title">
+      <string>Greyscale</string>
+     </property>
+     <addaction name="actionGreyscale_Dark"/>
+     <addaction name="actionGreyscale_Light"/>
+    </widget>
+    <widget class="QMenu" name="menuGreenscreen">
+     <property name="title">
+      <string>Greenscreen</string>
+     </property>
+     <addaction name="actionGreenscreen_Dark"/>
+     <addaction name="actionGreenscreen_Light"/>
+    </widget>
+    <widget class="QMenu" name="menuMocha">
+     <property name="title">
+      <string>Mocha</string>
+     </property>
+     <addaction name="actionMocha_Dark"/>
+     <addaction name="actionMocha_Light"/>
+    </widget>
+    <addaction name="menuSolarized"/>
+    <addaction name="menuGreyscale"/>
+    <addaction name="menuEmbers"/>
+    <addaction name="menuCodeschool"/>
+    <addaction name="menuGreenscreen"/>
+    <addaction name="menuMocha"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuPresets"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -1110,46 +1148,6 @@
     <string>Colors from File...</string>
    </property>
   </action>
-  <action name="actionSolarized_Dark">
-   <property name="text">
-    <string>Solarized Dark</string>
-   </property>
-  </action>
-  <action name="actionSolarized_Light">
-   <property name="text">
-    <string>Solarized Light</string>
-   </property>
-  </action>
-  <action name="actionGreyscale_Dark">
-   <property name="text">
-    <string>Greyscale Dark</string>
-   </property>
-  </action>
-  <action name="actionGreyscale_Light">
-   <property name="text">
-    <string>Greyscale Light</string>
-   </property>
-  </action>
-  <action name="actionCodeschool_Dark">
-   <property name="text">
-    <string>Codeschool Dark</string>
-   </property>
-  </action>
-  <action name="actionCodeschool_Light">
-   <property name="text">
-    <string>Codeschool Light</string>
-   </property>
-  </action>
-  <action name="actionEmbers_Dark">
-   <property name="text">
-    <string>Embers Dark</string>
-   </property>
-  </action>
-  <action name="actionEmbers_Light">
-   <property name="text">
-    <string>Embers Light</string>
-   </property>
-  </action>
   <action name="actionSave_to_Xresources">
    <property name="text">
     <string>Save to .Xresources</string>
@@ -1168,6 +1166,71 @@
   <action name="actionLoad_from_Xresourced">
    <property name="text">
     <string>Load from .Xresources</string>
+   </property>
+  </action>
+  <action name="actionDark">
+   <property name="text">
+    <string>Dark</string>
+   </property>
+  </action>
+  <action name="actionSolarized_Dark">
+   <property name="text">
+    <string>Solarized Dark</string>
+   </property>
+  </action>
+  <action name="actionSolarized_Light">
+   <property name="text">
+    <string>Solarized Light</string>
+   </property>
+  </action>
+  <action name="actionCodeschool_Dark">
+   <property name="text">
+    <string>Codeschool Dark</string>
+   </property>
+  </action>
+  <action name="actionCodeschool_Light">
+   <property name="text">
+    <string>Codeschool Light</string>
+   </property>
+  </action>
+  <action name="actionEmbers_Light">
+   <property name="text">
+    <string>Embers Light</string>
+   </property>
+  </action>
+  <action name="actionEmbers_Dark">
+   <property name="text">
+    <string>Embers Dark</string>
+   </property>
+  </action>
+  <action name="actionGreyscale_Dark">
+   <property name="text">
+    <string>Greyscale Dark</string>
+   </property>
+  </action>
+  <action name="actionGreyscale_Light">
+   <property name="text">
+    <string>Greyscale Light</string>
+   </property>
+  </action>
+  <action name="actionGreenscreen_Dark">
+   <property name="text">
+    <string>Greenscreen Dark</string>
+   </property>
+  </action>
+  <action name="actionGreenscreen_Light">
+   <property name="text">
+    <string>Greenscreen Light</string>
+   </property>
+  </action>
+  <action name="actionMocha_Dark">
+   <property name="text">
+    <string>Mocha Dark</string>
+   </property>
+  </action>
+  <action name="actionMocha_Light">
+   <property name="text">
+    <string>Mocha Light</string>
    </property>
   </action>
  </widget>

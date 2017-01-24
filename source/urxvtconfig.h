@@ -96,6 +96,14 @@ private slots:
 
     void on_actionLoad_from_Xdefaults_triggered();
 
+    void on_actionGreenscreen_Dark_triggered();
+
+    void on_actionGreenscreen_Light_triggered();
+
+    void on_actionMocha_Dark_triggered();
+
+    void on_actionMocha_Light_triggered();
+
 private:
     Ui::URXVTConfig *ui;
 };
