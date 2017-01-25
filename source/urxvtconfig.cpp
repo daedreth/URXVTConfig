@@ -243,6 +243,174 @@ void URXVTConfig::on_actionNew_triggered()
     updatePreview();
 }
 
+void URXVTConfig::saveToFile(QString target)
+{
+    if(target=="xdefaults"){
+        pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
+    }else if(target=="xresources"){
+        pathToFile =  "/home/"+ qgetenv("USER") +"/.Xresources";
+    }else if(target=="other"){
+        pathToFile = QFileDialog::getSaveFileName();
+    }
+
+
+    QMessageBox msgBox;
+    msgBox.setText("Warning!");
+    msgBox.setInformativeText("Do you wish to overwrite your configuration?");
+    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::No);
+    int ret = msgBox.exec();
+
+    if(ret == QMessageBox::No)
+    {
+        return;
+    }
+
+    QFile file(pathToFile);
+
+    if (!file.open(QIODevice::ReadWrite) )
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Unable to open/write to the file.");
+        msgBox.setInformativeText("Ensure you have permissions to modify the file.");
+        msgBox.exec();
+    }else{
+        file.remove();
+        file.close();
+        file.open(QIODevice::ReadWrite);
+
+        // Open stream in order to write to file
+
+        QTextStream initialMessage(&file);
+        initialMessage << "##### THIS FILE IS BEING CURRENTLY MANAGED BY URXVTCONFIG #####" << endl;
+        initialMessage << "##### CHANGES DONE TO THIS FILE MANUALLY MAY AFFECT THE FUNCTIONALITY ######" << endl;
+        initialMessage << "##### PROCEED WITH CAUTION! #####" << endl << endl;
+        file.close();
+
+        // Reopen the file to prevent errors
+
+        file.open(QIODevice::Append);
+        QTextStream stream(&file);
+
+        // Colors
+
+        stream << "! special colors" << endl;
+        stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
+        stream << "*.background:  " << ui->lineEditColor2->text() << endl;
+        stream << "*.cursorColor:  " << ui->lineEditColor3->text() << endl;
+        stream << "! black" << endl;
+        stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
+        stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
+        stream << "! red" << endl;
+        stream << "*.color1:      " << ui->lineEditColor6->text() << endl;
+        stream << "*.color9:      " << ui->lineEditColor7->text() << endl;
+        stream << "! green" << endl;
+        stream << "*.color2:      " << ui->lineEditColor8->text() << endl;
+        stream << "*.color10:     " << ui->lineEditColor9->text() << endl;
+        stream << "! yellow" << endl;
+        stream << "*.color3:      " << ui->lineEditColor10->text() << endl;
+        stream << "*.color11:     " << ui->lineEditColor11->text() << endl;
+        stream << "! blue" << endl;
+        stream << "*.color4:      " << ui->lineEditColor12->text() << endl;
+        stream << "*.color12:     " << ui->lineEditColor13->text() << endl;
+        stream << "! magenta" << endl;
+        stream << "*.color5:      " << ui->lineEditColor14->text() << endl;
+        stream << "*.color13:     " << ui->lineEditColor15->text() << endl;
+        stream << "! cyan" << endl;
+        stream << "*.color6:      " << ui->lineEditColor16->text() << endl;
+        stream << "*.color14:     " << ui->lineEditColor17->text() << endl;
+        stream << "! white" << endl;
+        stream << "*.color7:      " << ui->lineEditColor18->text() << endl;
+        stream << "*.color15:     " << ui->lineEditColor19->text() << endl << endl;
+
+        // Scrollbar
+
+        if(ui->checkBoxScrollbarEnabled->isChecked())
+        {
+            stream << "URxvt*scrollBar:     true" << endl;
+        }else{
+            stream << "URxvt*scrollBar:     false" << endl << endl;
+        }
+        if(ui->checkBoxScrollbarRight->isChecked())
+        {
+            stream << "URxvt*scrollBar_right:   true" << endl;
+        }else{
+            stream << "URxvt*scrollBar_right:   false" << endl << endl;
+        }
+
+        // Transparency
+
+        if(ui->checkBoxTransparencyEnabled->isChecked()){
+            stream << "URxvt*transparent:   true" << endl;
+            stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
+        }else{
+            stream << "URxvt*transparent:   false" << endl << endl;
+        }
+
+        if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
+            stream << "URxvt*depth: 32" << endl;
+            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl;
+        }
+
+        // Font
+
+        QString current = ui->fontComboBox->currentFont().toString();
+        current.chop(20);
+        stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl << endl;
+
+        if(ui->checkBoxFontBoldDisable->isChecked()){
+            stream << "URxvt.boldFont:" << endl;
+        }
+
+        stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl;
+
+        if(ui->checkBoxFontAntialiasing->isChecked())
+        {
+            stream << "*antialias:  true" << endl;
+        }else{
+            stream << "*antialias:  false" << endl;
+        }
+
+        if(ui->checkBoxFontHinting->isChecked())
+        {
+            stream << "*autohint:  true" << endl;
+        }else{
+            stream << "*autohint:  false" << endl << endl;
+        }
+
+        // Plugins
+
+        if(ui->checkBoxClickableUrls->isChecked())
+        {
+            stream << "URxvt.perl-ext-common: default,matcher" << endl;
+            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text() << endl;
+            stream << "URxvt.matcher.button: 1" << endl << endl;
+        }
+
+        if(ui->checkBoxTabs->isChecked())
+        {
+            // this uses colors already defined above for some reason
+            // sooner or later will add an option to modify
+
+            stream << "URxvt.perl-ext-common: ...,tabbed,..." << endl;
+            stream << "URxvt.tabbed.tabbar-fg: 2" << endl;
+            stream << "URxvt.tabbed.tabbar-bg: 0" << endl;
+            stream << "URxvt.tabbed.tab-fg: 3" << endl;
+            stream << "URxvt.tabbed.tab-bg: 2" << endl;
+        }
+
+        file.close();
+
+        // Confirmation message
+
+        QMessageBox msgBox;
+        msgBox.setText("Changes saved!");
+        msgBox.exec();
+
+    }
+}
+
+
 void URXVTConfig::on_actionOpen_triggered()
 {
     QString openFileName = QFileDialog::getOpenFileName();
@@ -385,158 +553,17 @@ void URXVTConfig::on_actionOpen_triggered()
 
 void URXVTConfig::on_actionSave_triggered()
 {
+    saveToFile("xdefaults");
+}
 
-    QMessageBox msgBox;
-    msgBox.setText("Warning!");
-    msgBox.setInformativeText("Do you wish to overwrite your .Xdefaults?");
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::No);
-    int ret = msgBox.exec();
+void URXVTConfig::on_actionSave_to_Xresources_triggered()
+{
+    saveToFile("xresources");
+}
 
-    if(ret == QMessageBox::No)
-    {
-        return;
-    }
-
-    QFile file(pathToFile);
-
-    if (!file.open(QIODevice::ReadWrite) )
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Unable to open/write to ~/.Xdefaults.");
-        msgBox.setInformativeText("Ensure you have permissions to modify the file.");
-        msgBox.exec();
-    }else{
-        file.remove();
-        file.close();
-        file.open(QIODevice::ReadWrite);
-
-        // Open stream in order to write to file
-
-        QTextStream initialMessage(&file);
-        initialMessage << "##### THIS FILE IS BEING CURRENTLY MANAGED BY URXVTCONFIG #####" << endl;
-        initialMessage << "##### CHANGES DONE TO THIS FILE MANUALLY MAY AFFECT THE FUNCTIONALITY ######" << endl;
-        initialMessage << "##### PROCEED WITH CAUTION! #####" << endl << endl;
-        file.close();
-
-        // Reopen the file to prevent errors
-
-        file.open(QIODevice::Append);
-        QTextStream stream(&file);
-
-        stream << "! special colors" << endl;
-        stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
-        stream << "*.background:  " << ui->lineEditColor2->text() << endl;
-        stream << "*.cursorColor:  " << ui->lineEditColor3->text() << endl;
-        stream << "! black" << endl;
-        stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
-        stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
-        stream << "! red" << endl;
-        stream << "*.color1:      " << ui->lineEditColor6->text() << endl;
-        stream << "*.color9:      " << ui->lineEditColor7->text() << endl;
-        stream << "! green" << endl;
-        stream << "*.color2:      " << ui->lineEditColor8->text() << endl;
-        stream << "*.color10:     " << ui->lineEditColor9->text() << endl;
-        stream << "! yellow" << endl;
-        stream << "*.color3:      " << ui->lineEditColor10->text() << endl;
-        stream << "*.color11:     " << ui->lineEditColor11->text() << endl;
-        stream << "! blue" << endl;
-        stream << "*.color4:      " << ui->lineEditColor12->text() << endl;
-        stream << "*.color12:     " << ui->lineEditColor13->text() << endl;
-        stream << "! magenta" << endl;
-        stream << "*.color5:      " << ui->lineEditColor14->text() << endl;
-        stream << "*.color13:     " << ui->lineEditColor15->text() << endl;
-        stream << "! cyan" << endl;
-        stream << "*.color6:      " << ui->lineEditColor16->text() << endl;
-        stream << "*.color14:     " << ui->lineEditColor17->text() << endl;
-        stream << "! white" << endl;
-        stream << "*.color7:      " << ui->lineEditColor18->text() << endl;
-        stream << "*.color15:     " << ui->lineEditColor19->text() << endl << endl;
-
-        // Scrollbar
-
-        if(ui->checkBoxScrollbarEnabled->isChecked())
-        {
-            stream << "URxvt*scrollBar:     true" << endl;
-        }else{
-            stream << "URxvt*scrollBar:     false" << endl << endl;
-        }
-        if(ui->checkBoxScrollbarRight->isChecked())
-        {
-            stream << "URxvt*scrollBar_right:   true" << endl;
-        }else{
-            stream << "URxvt*scrollBar_right:   false" << endl << endl;
-        }
-
-        // Transparency
-
-        if(ui->checkBoxTransparencyEnabled->isChecked()){
-            stream << "URxvt*transparent:   true" << endl;
-            stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
-        }else{
-            stream << "URxvt*transparent:   false" << endl << endl;
-        }
-
-        if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
-            stream << "URxvt*depth: 32" << endl;
-            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl;
-        }
-
-        // Font
-
-        QString current = ui->fontComboBox->currentFont().toString();
-        current.chop(20);
-        stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl << endl;
-
-        if(ui->checkBoxFontBoldDisable->isChecked()){
-            stream << "URxvt.boldFont:" << endl;
-        }
-
-        stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl;
-
-        if(ui->checkBoxFontAntialiasing->isChecked())
-        {
-            stream << "*antialias:  true" << endl;
-        }else{
-            stream << "*antialias:  false" << endl;
-        }
-
-        if(ui->checkBoxFontHinting->isChecked())
-        {
-            stream << "*autohint:  true" << endl;
-        }else{
-            stream << "*autohint:  false" << endl << endl;
-        }
-
-        // Plugins
-
-        if(ui->checkBoxClickableUrls->isChecked())
-        {
-            stream << "URxvt.perl-ext-common: default,matcher" << endl;
-            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text() << endl;
-            stream << "URxvt.matcher.button: 1" << endl << endl;
-        }
-
-        if(ui->checkBoxTabs->isChecked())
-        {
-            // this uses colors already defined above for some reason
-
-            stream << "URxvt.perl-ext-common: ...,tabbed,..." << endl;
-            stream << "URxvt.tabbed.tabbar-fg: 2" << endl;
-            stream << "URxvt.tabbed.tabbar-bg: 0" << endl;
-            stream << "URxvt.tabbed.tab-fg: 3" << endl;
-            stream << "URxvt.tabbed.tab-bg: 2" << endl;
-        }
-
-        file.close();
-
-        // Confirmation message
-
-        QMessageBox msgBox;
-        msgBox.setText("Changes saved!");
-        msgBox.exec();
-
-    }
+void URXVTConfig::on_actionSave_to_custom_file_triggered()
+{
+    saveToFile("other");
 }
 
 // apply changes to lineEditColor's
@@ -839,6 +866,8 @@ void URXVTConfig::on_actionQuit_triggered()
     QApplication::quit();
 }
 
+    // Preset color schemes
+
 void URXVTConfig::on_actionSolarized_Dark_triggered()
 {
     QString preset = "#93a1a1,#002b36,#93a1a1,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3";
@@ -923,307 +952,7 @@ void URXVTConfig::on_actionMocha_Light_triggered()
     updatePreview();
 }
 
-void URXVTConfig::on_actionSave_to_Xresources_triggered()
-{
 
-    QMessageBox msgBox;
-    msgBox.setText("Warning!");
-    msgBox.setInformativeText("Do you wish to overwrite your .Xresources?");
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::No);
-    int ret = msgBox.exec();
-
-    if(ret == QMessageBox::No)
-    {
-        return;
-    }
-
-    QFile file(pathToFileResources);
-
-    if (!file.open(QIODevice::ReadWrite) )
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Unable to open/write to ~/.Xresources");
-        msgBox.setInformativeText("Ensure you have permissions to modify the file.");
-        msgBox.exec();
-    }else{
-        file.remove();
-        file.close();
-        file.open(QIODevice::ReadWrite);
-
-        // Open stream in order to write to file
-
-        QTextStream initialMessage(&file);
-        initialMessage << "##### THIS FILE IS BEING CURRENTLY MANAGED BY URXVTCONFIG #####" << endl;
-        initialMessage << "##### CHANGES DONE TO THIS FILE MANUALLY MAY AFFECT THE FUNCTIONALITY ######" << endl;
-        initialMessage << "##### PROCEED WITH CAUTION! #####" << endl << endl;
-        file.close();
-
-        // Reopen the file to prevent errors
-
-        file.open(QIODevice::Append);
-        QTextStream stream(&file);
-
-        stream << "! special colors" << endl;
-        stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
-        stream << "*.background:  " << ui->lineEditColor2->text() << endl;
-        stream << "*.cursorColor:  " << ui->lineEditColor3->text() << endl;
-        stream << "! black" << endl;
-        stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
-        stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
-        stream << "! red" << endl;
-        stream << "*.color1:      " << ui->lineEditColor6->text() << endl;
-        stream << "*.color9:      " << ui->lineEditColor7->text() << endl;
-        stream << "! green" << endl;
-        stream << "*.color2:      " << ui->lineEditColor8->text() << endl;
-        stream << "*.color10:     " << ui->lineEditColor9->text() << endl;
-        stream << "! yellow" << endl;
-        stream << "*.color3:      " << ui->lineEditColor10->text() << endl;
-        stream << "*.color11:     " << ui->lineEditColor11->text() << endl;
-        stream << "! blue" << endl;
-        stream << "*.color4:      " << ui->lineEditColor12->text() << endl;
-        stream << "*.color12:     " << ui->lineEditColor13->text() << endl;
-        stream << "! magenta" << endl;
-        stream << "*.color5:      " << ui->lineEditColor14->text() << endl;
-        stream << "*.color13:     " << ui->lineEditColor15->text() << endl;
-        stream << "! cyan" << endl;
-        stream << "*.color6:      " << ui->lineEditColor16->text() << endl;
-        stream << "*.color14:     " << ui->lineEditColor17->text() << endl;
-        stream << "! white" << endl;
-        stream << "*.color7:      " << ui->lineEditColor18->text() << endl;
-        stream << "*.color15:     " << ui->lineEditColor19->text() << endl << endl;
-
-        // Scrollbar
-
-        if(ui->checkBoxScrollbarEnabled->isChecked())
-        {
-            stream << "URxvt*scrollBar:     true" << endl;
-        }else{
-            stream << "URxvt*scrollBar:     false" << endl << endl;
-        }
-        if(ui->checkBoxScrollbarRight->isChecked())
-        {
-            stream << "URxvt*scrollBar_right:   true" << endl;
-        }else{
-            stream << "URxvt*scrollBar_right:   false" << endl << endl;
-        }
-
-        // Transparency
-
-        if(ui->checkBoxTransparencyEnabled->isChecked()){
-            stream << "URxvt*transparent:   true" << endl;
-            stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
-        }else{
-            stream << "URxvt*transparent:   false" << endl << endl;
-        }
-
-        if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
-            stream << "URxvt*depth: 32" << endl;
-            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl;
-        }
-
-        // Font
-
-        QString current = ui->fontComboBox->currentFont().toString();
-        current.chop(20);
-        stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl << endl;
-
-        if(ui->checkBoxFontBoldDisable->isChecked()){
-            stream << "URxvt.boldFont:" << endl;
-        }
-
-        stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl;
-
-        if(ui->checkBoxFontAntialiasing->isChecked())
-        {
-            stream << "*antialias:  true" << endl;
-        }else{
-            stream << "*antialias:  false" << endl;
-        }
-
-        if(ui->checkBoxFontHinting->isChecked())
-        {
-            stream << "*autohint:  true" << endl;
-        }else{
-            stream << "*autohint:  false" << endl << endl;
-        }
-
-        // Plugins
-
-        if(ui->checkBoxClickableUrls->isChecked())
-        {
-            stream << "URxvt.perl-ext-common: default,matcher" << endl;
-            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text() << endl;
-            stream << "URxvt.matcher.button: 1" << endl << endl;
-        }
-
-        if(ui->checkBoxTabs->isChecked())
-        {
-            // this uses colors already defined above for some reason
-
-            stream << "URxvt.perl-ext-common: ...,tabbed,..." << endl;
-            stream << "URxvt.tabbed.tabbar-fg: 2" << endl;
-            stream << "URxvt.tabbed.tabbar-bg: 0" << endl;
-            stream << "URxvt.tabbed.tab-fg: 3" << endl;
-            stream << "URxvt.tabbed.tab-bg: 2" << endl;
-        }
-
-        file.close();
-
-        // Confirmation message
-
-        QMessageBox msgBox;
-        msgBox.setText("Changes saved!");
-        msgBox.exec();
-
-    }
-}
-
-void URXVTConfig::on_actionSave_to_custom_file_triggered()
-{
-    QString saveFileName = QFileDialog::getSaveFileName();
-
-
-    QFile file(saveFileName);
-
-    if (!file.open(QIODevice::ReadWrite) )
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Unable to open your selected file!");
-        msgBox.setInformativeText("Ensure you have permissions to modify the file.");
-        msgBox.exec();
-    }else{
-        file.remove();
-        file.close();
-        file.open(QIODevice::ReadWrite);
-
-        // Open stream in order to write to file
-
-        QTextStream initialMessage(&file);
-        initialMessage << "##### THIS FILE IS BEING CURRENTLY MANAGED BY URXVTCONFIG #####" << endl;
-        initialMessage << "##### CHANGES DONE TO THIS FILE MANUALLY MAY AFFECT THE FUNCTIONALITY ######" << endl;
-        initialMessage << "##### PROCEED WITH CAUTION! #####" << endl << endl;
-        file.close();
-
-        // Reopen the file to prevent errors
-
-        file.open(QIODevice::Append);
-        QTextStream stream(&file);
-
-        stream << "! special colors" << endl;
-        stream << "*.foreground:  " << ui->lineEditColor1->text() << endl;
-        stream << "*.background:  " << ui->lineEditColor2->text() << endl;
-        stream << "*.cursorColor:  " << ui->lineEditColor3->text() << endl;
-        stream << "! black" << endl;
-        stream << "*.color0:      " << ui->lineEditColor4->text() << endl;
-        stream << "*.color8:      " << ui->lineEditColor5->text() << endl;
-        stream << "! red" << endl;
-        stream << "*.color1:      " << ui->lineEditColor6->text() << endl;
-        stream << "*.color9:      " << ui->lineEditColor7->text() << endl;
-        stream << "! green" << endl;
-        stream << "*.color2:      " << ui->lineEditColor8->text() << endl;
-        stream << "*.color10:     " << ui->lineEditColor9->text() << endl;
-        stream << "! yellow" << endl;
-        stream << "*.color3:      " << ui->lineEditColor10->text() << endl;
-        stream << "*.color11:     " << ui->lineEditColor11->text() << endl;
-        stream << "! blue" << endl;
-        stream << "*.color4:      " << ui->lineEditColor12->text() << endl;
-        stream << "*.color12:     " << ui->lineEditColor13->text() << endl;
-        stream << "! magenta" << endl;
-        stream << "*.color5:      " << ui->lineEditColor14->text() << endl;
-        stream << "*.color13:     " << ui->lineEditColor15->text() << endl;
-        stream << "! cyan" << endl;
-        stream << "*.color6:      " << ui->lineEditColor16->text() << endl;
-        stream << "*.color14:     " << ui->lineEditColor17->text() << endl;
-        stream << "! white" << endl;
-        stream << "*.color7:      " << ui->lineEditColor18->text() << endl;
-        stream << "*.color15:     " << ui->lineEditColor19->text() << endl << endl;
-
-        // Scrollbar
-
-        if(ui->checkBoxScrollbarEnabled->isChecked())
-        {
-            stream << "URxvt*scrollBar:     true" << endl;
-        }else{
-            stream << "URxvt*scrollBar:     false" << endl << endl;
-        }
-        if(ui->checkBoxScrollbarRight->isChecked())
-        {
-            stream << "URxvt*scrollBar_right:   true" << endl;
-        }else{
-            stream << "URxvt*scrollBar_right:   false" << endl << endl;
-        }
-
-        // Transparency
-
-        if(ui->checkBoxTransparencyEnabled->isChecked()){
-            stream << "URxvt*transparent:   true" << endl;
-            stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
-        }else{
-            stream << "URxvt*transparent:   false" << endl << endl;
-        }
-
-        if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
-            stream << "URxvt*depth: 32" << endl;
-            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl;
-        }
-
-        // Font
-
-        QString current = ui->fontComboBox->currentFont().toString();
-        current.chop(20);
-        stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl << endl;
-
-        if(ui->checkBoxFontBoldDisable->isChecked()){
-            stream << "URxvt.boldFont:" << endl;
-        }
-
-        stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl;
-
-        if(ui->checkBoxFontAntialiasing->isChecked())
-        {
-            stream << "*antialias:  true" << endl;
-        }else{
-            stream << "*antialias:  false" << endl;
-        }
-
-        if(ui->checkBoxFontHinting->isChecked())
-        {
-            stream << "*autohint:  true" << endl;
-        }else{
-            stream << "*autohint:  false" << endl << endl;
-        }
-
-        // Plugins
-
-        if(ui->checkBoxClickableUrls->isChecked())
-        {
-            stream << "URxvt.perl-ext-common: default,matcher" << endl;
-            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text() << endl;
-            stream << "URxvt.matcher.button: 1" << endl << endl;
-        }
-
-        if(ui->checkBoxTabs->isChecked())
-        {
-            // this uses colors already defined above for some reason
-
-            stream << "URxvt.perl-ext-common: ...,tabbed,..." << endl;
-            stream << "URxvt.tabbed.tabbar-fg: 2" << endl;
-            stream << "URxvt.tabbed.tabbar-bg: 0" << endl;
-            stream << "URxvt.tabbed.tab-fg: 3" << endl;
-            stream << "URxvt.tabbed.tab-bg: 2" << endl;
-        }
-
-        file.close();
-
-        // Confirmation message
-
-        QMessageBox msgBox;
-        msgBox.setText("Changes saved!");
-        msgBox.exec();
-
-    }
-}
 
 void URXVTConfig::on_actionLoad_from_Xresourced_triggered()
 {
