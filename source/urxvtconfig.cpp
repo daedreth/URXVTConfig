@@ -7,6 +7,7 @@
 #include "QTextStream"
 #include "QFileDialog"
 #include "QProcess"
+#include "QFileInfo"
 
 URXVTConfig::URXVTConfig(QWidget *parent) :
     QMainWindow(parent),
@@ -218,7 +219,6 @@ void URXVTConfig::on_actionNew_triggered()
 
     ui->checkBoxTransparencyEnabled->setChecked(false);
     ui->horizontalSliderShading->setValue(0);
-    ui->horizontalSliderShading->setEnabled(false);
     ui->checkBoxTrueTransparencyEnabled->setChecked(false);
 
     // Scrollbar reset
@@ -243,6 +243,7 @@ void URXVTConfig::on_actionNew_triggered()
 
 void URXVTConfig::saveToFile(QString target)
 {
+
     if(target=="xdefaults"){
         pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
     }else if(target=="xresources"){
@@ -251,17 +252,33 @@ void URXVTConfig::saveToFile(QString target)
         pathToFile = QFileDialog::getSaveFileName();
     }
 
-
+    if((target == "xdefaults" && QFileInfo(pathToFile).exists()) || (target == "xresources" && QFileInfo(pathToFile).exists())){
     QMessageBox msgBox;
-    msgBox.setText("Warning!");
-    msgBox.setInformativeText("Do you wish to overwrite your configuration?");
+    msgBox.setText("Question!");
+    msgBox.setInformativeText("Do you wish to backup your existing configuration?");
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::No);
+    msgBox.setDefaultButton(QMessageBox::Yes);
     int ret = msgBox.exec();
 
-    if(ret == QMessageBox::No)
-    {
-        return;
+        if(ret == QMessageBox::Yes)
+        {
+           QString backupLocation = QFileDialog::getSaveFileName();
+
+           if(target == "xdefaults"){
+               QFile::copy("/home/"+ qgetenv("USER") +"/.Xdefaults", backupLocation);
+           }else if(target == "xresources"){
+               QFile::copy("/home/"+ qgetenv("USER") +"/.Xresources", backupLocation);
+           }
+
+            if(backupLocation.isEmpty())
+            {
+                QMessageBox msgBox;
+                msgBox.setText("Error!");
+                msgBox.setInformativeText("No backup file chosen, no configuration will be saved!");
+                msgBox.exec();
+                return;
+            }
+        }
     }
 
     QFile file(pathToFile);
