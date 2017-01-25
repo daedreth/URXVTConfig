@@ -17,6 +17,7 @@ public:
     void updatePreview();
     void loadPreset(QString preset);
     void saveToFile(QString target);
+    void openFromFile(QString target);
 
 private slots:
     void on_actionNew_triggered();
