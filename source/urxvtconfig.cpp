@@ -253,30 +253,31 @@ void URXVTConfig::saveToFile(QString target)
     }
 
     if((target == "xdefaults" && QFileInfo(pathToFile).exists()) || (target == "xresources" && QFileInfo(pathToFile).exists())){
-    QMessageBox msgBox;
-    msgBox.setText("Question!");
-    msgBox.setInformativeText("Do you wish to backup your existing configuration?");
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::Yes);
-    int ret = msgBox.exec();
+        QMessageBox msgBox;
+        msgBox.setText("Question!");
+        msgBox.setInformativeText("Do you wish to backup your existing configuration?");
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::Yes);
+        int ret = msgBox.exec();
 
         if(ret == QMessageBox::Yes)
         {
-           QString backupLocation = QFileDialog::getSaveFileName();
+            QString backupLocation = QFileDialog::getSaveFileName();
 
-           if(target == "xdefaults"){
-               QFile::copy("/home/"+ qgetenv("USER") +"/.Xdefaults", backupLocation);
-           }else if(target == "xresources"){
-               QFile::copy("/home/"+ qgetenv("USER") +"/.Xresources", backupLocation);
-           }
-
+            if(target == "xdefaults")
+            {
+                QFile::copy("/home/"+ qgetenv("USER") +"/.Xdefaults", backupLocation);
+            }else if(target == "xresources")
+            {
+                QFile::copy("/home/"+ qgetenv("USER") +"/.Xresources", backupLocation);
+            }
             if(backupLocation.isEmpty())
             {
                 QMessageBox msgBox;
                 msgBox.setText("Error!");
                 msgBox.setInformativeText("No backup file chosen, no configuration will be saved!");
                 msgBox.exec();
-                return;
+                 return;
             }
         }
     }
@@ -285,10 +286,10 @@ void URXVTConfig::saveToFile(QString target)
 
     if (!file.open(QIODevice::ReadWrite) )
     {
-        QMessageBox msgBox;
-        msgBox.setText("Unable to open/write to the file.");
-        msgBox.setInformativeText("Ensure you have permissions to modify the file.");
-        msgBox.exec();
+    QMessageBox msgBox;
+    msgBox.setText("Unable to open/write to the file.");
+    msgBox.setInformativeText("Ensure you have permissions to modify the file.");
+    msgBox.exec();
     }else{
         file.remove();
         file.close();
