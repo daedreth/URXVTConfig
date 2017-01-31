@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = URXVTConfig
+TARGET = urxvtconfig
 TEMPLATE = app
 
 
@@ -18,3 +18,6 @@ SOURCES += main.cpp\
 HEADERS  += urxvtconfig.h
 
 FORMS    += urxvtconfig.ui
+
+target.path = /usr/bin
+INSTALLS += target
