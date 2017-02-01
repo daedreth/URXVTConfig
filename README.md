@@ -41,6 +41,15 @@ fontconfig and libXft - For font selection.
 It also requires rxvt-unicode to be built with "xft" support.
 If you do not know what this means, don't worry about it.
 
+
+# How to get
+We're on the AUR now, use your favorite AUR helper.
+
+**https://aur.archlinux.org/packages/urxvtconfig**
+
+This will build from the latest commit on the "master" branch.
+
+
 # Build it yourself
 Requires qt4 and is highly encouraged.
 
@@ -51,7 +60,8 @@ Requires qt4 and is highly encouraged.
   $ sudo make install
   ~~~
 
-Alternatively, just grab the latest "release".
+
+Alternatively, if all else fails, just grab the latest "release".
 
 
 # Troubleshooting
@@ -62,6 +72,7 @@ Make sure your "USER" environmental variable has not been altered.
 > I keep running into an error message about "not having permissions" to write to the file.
 
 Run `chown -R <username>:<usergroup> /home/<username>` as root to fix that.
+This will restore permissions to your "home" directory.
 
 > My old configuration is not read properly!
 
@@ -102,3 +113,4 @@ Issues will be resolved as fast as possible.
 # Credits
 - The QTeam, for a framework that isn't horrible.
 - Jesskas, for motivation.
+- Seriel, for creating the PKGBUILD.
