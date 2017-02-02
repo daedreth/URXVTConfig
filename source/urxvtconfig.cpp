@@ -163,7 +163,8 @@ void URXVTConfig::on_actionNew_triggered()
 {
 
     QMessageBox msgBox;
-    msgBox.setText("Warning!");
+    msgBox.setText("Question!");
+    msgBox.setIcon(QMessageBox::Question);
     msgBox.setInformativeText("Change all values to default?");
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::Yes);
@@ -255,6 +256,7 @@ void URXVTConfig::saveToFile(QString target)
     if((target == "xdefaults" && QFileInfo(pathToFile).exists()) || (target == "xresources" && QFileInfo(pathToFile).exists())){
         QMessageBox msgBox;
         msgBox.setText("Question!");
+        msgBox.setIcon(QMessageBox::Question);
         msgBox.setInformativeText("Do you wish to backup your existing configuration?");
         msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
         msgBox.setDefaultButton(QMessageBox::Yes);
@@ -275,6 +277,7 @@ void URXVTConfig::saveToFile(QString target)
             {
                 QMessageBox msgBox;
                 msgBox.setText("Error!");
+                msgBox.setIcon(QMessageBox::Warning);
                 msgBox.setInformativeText("No backup file chosen, no configuration will be saved!");
                 msgBox.exec();
                  return;
@@ -288,6 +291,7 @@ void URXVTConfig::saveToFile(QString target)
     {
     QMessageBox msgBox;
     msgBox.setText("Unable to open/write to the file.");
+    msgBox.setIcon(QMessageBox::Critical);
     msgBox.setInformativeText("Ensure you have permissions to modify the file.");
     msgBox.exec();
     }else{
@@ -444,6 +448,7 @@ void URXVTConfig::openFromFile(QString target)
     {
         QMessageBox msgBox;
         msgBox.setText("Unable to open file!");
+        msgBox.setIcon(QMessageBox::Critical);
         msgBox.setInformativeText("Ensure you have permissions to modify the file or that the file exists!");
         msgBox.exec();
     }else{
@@ -729,6 +734,7 @@ void URXVTConfig::on_checkBoxClickableUrls_clicked()
 
         QMessageBox msgBox;
         msgBox.setText("External software necessary!!");
+        msgBox.setIcon(QMessageBox::Warning);
         msgBox.setInformativeText("Please install \"urxvt-perls\" with your distributions package manager!");
         msgBox.exec();
     }
@@ -807,6 +813,7 @@ void URXVTConfig::on_actionFrom_File_triggered()
     {
         QMessageBox msgBox;
         msgBox.setText("Error!");
+        msgBox.setIcon(QMessageBox::Critical);
         msgBox.setInformativeText("imagemagick is not installed!");
         msgBox.exec();
         return;
@@ -894,6 +901,7 @@ void URXVTConfig::on_actionHelp_triggered()
 
     QMessageBox msgBox;
     msgBox.setText("Help");
+    msgBox.setIcon(QMessageBox::Information);
     msgBox.setInformativeText("Visit the GitHub page for more information!\n\n\nhttp://github.com/daedreth/URXVTConfig");
     msgBox.exec();
 }
@@ -904,6 +912,7 @@ void URXVTConfig::on_actionAbout_triggered()
 
     QMessageBox msgBox;
     msgBox.setText("About");
+    msgBox.setIcon(QMessageBox::Information);
     msgBox.setInformativeText("(c) URXVTConfig by Dawid 'daedreth' Eckert\n\nURXVTConfig is a tool intended for configuration of the rxvt-unicode terminal.");
     msgBox.exec();
 }
