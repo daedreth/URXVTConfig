@@ -803,6 +803,15 @@ void URXVTConfig::on_actionFrom_File_triggered()
 
     // imagemagick is necessary for this to work
 
+    if(!QFile::exists("/usr/bin/convert"))
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Error!");
+        msgBox.setInformativeText("imagemagick is not installed!");
+        msgBox.exec();
+        return;
+    }
+
     QProcess process;
     QString fileName = QFileDialog::getOpenFileName();
     QString processName = "convert ";
@@ -876,6 +885,7 @@ void URXVTConfig::on_actionFrom_File_triggered()
         ui->lineEditColor3->setText(stdout.left(7));
         setColorDefault(ui->lineEditColor3, stdout.left(7));
 
+        updatePreview();
 }
 
 void URXVTConfig::on_actionHelp_triggered()
