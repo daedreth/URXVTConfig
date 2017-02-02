@@ -106,6 +106,12 @@ private slots:
 
     void on_actionMocha_Light_triggered();
 
+    void on_checkBoxTransparencyEnabled_clicked();
+
+    void on_checkBoxTrueTransparencyEnabled_clicked();
+
+    void on_checkBoxTabs_clicked();
+
 private:
     Ui::URXVTConfig *ui;
 };

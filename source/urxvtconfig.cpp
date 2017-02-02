@@ -30,6 +30,7 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
 // setting up the filepaths
 QString pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
 QString pathToFileResources = "/home/"+ qgetenv("USER") +"/.Xresources";
+bool extensionFlag = false;
 
 URXVTConfig::~URXVTConfig()
 {
@@ -726,18 +727,47 @@ void URXVTConfig::on_pushButtonColor19_clicked()
     updatePreview();
 }
 
+ // only one transparecy mode may be used at a time
+ // if both were to be enabled urxvt will ALWAYS prefer fake transparency
+
+void URXVTConfig::on_checkBoxTransparencyEnabled_clicked()
+{
+    if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
+        ui->checkBoxTrueTransparencyEnabled->setChecked(false);
+    }
+}
+
+void URXVTConfig::on_checkBoxTrueTransparencyEnabled_clicked()
+{
+    if(ui->checkBoxTransparencyEnabled->isChecked()){
+        ui->checkBoxTransparencyEnabled->setChecked(false);
+    }
+}
+
+ // install urxvt-perls
+
 void URXVTConfig::on_checkBoxClickableUrls_clicked()
 {
-    if(ui->lineEditBrowser->isEnabled())
-    {
-        // install urxvt-perls
+    if(extensionFlag) return;
 
-        QMessageBox msgBox;
-        msgBox.setText("External software necessary!!");
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setInformativeText("Please install \"urxvt-perls\" with your distributions package manager!");
-        msgBox.exec();
-    }
+    QMessageBox msgBox;
+    msgBox.setText("External software necessary!!");
+    extensionFlag = true;
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setInformativeText("Please install \"urxvt-perls\" with your distributions package manager!");
+    msgBox.exec();
+}
+
+void URXVTConfig::on_checkBoxTabs_clicked()
+{
+    if(extensionFlag) return;
+
+    QMessageBox msgBox;
+    msgBox.setText("External software necessary!!");
+    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setInformativeText("Please install \"urxvt-perls\" with your distributions package manager!");
+    msgBox.exec();
+    extensionFlag = true;
 }
 
 void URXVTConfig::loadPreset(QString preset)
@@ -1009,3 +1039,6 @@ void URXVTConfig::on_actionMocha_Light_triggered()
     loadPreset(preset);
     updatePreview();
 }
+
+
+
