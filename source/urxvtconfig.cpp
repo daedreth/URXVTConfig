@@ -348,13 +348,13 @@ void URXVTConfig::saveToFile(QString target)
 
         if(ui->checkBoxScrollbarEnabled->isChecked())
         {
-            stream << "URxvt*scrollBar:     true" << endl;
+            stream << "URxvt*scrollBar:         true" << endl;
         }else{
-            stream << "URxvt*scrollBar:     false" << endl << endl;
+            stream << "URxvt*scrollBar:         false" << endl;
         }
         if(ui->checkBoxScrollbarRight->isChecked())
         {
-            stream << "URxvt*scrollBar_right:   true" << endl;
+            stream << "URxvt*scrollBar_right:   true" << endl << endl;
         }else{
             stream << "URxvt*scrollBar_right:   false" << endl << endl;
         }
@@ -362,28 +362,28 @@ void URXVTConfig::saveToFile(QString target)
         // Transparency
 
         if(ui->checkBoxTransparencyEnabled->isChecked()){
-            stream << "URxvt*transparent:   true" << endl;
+            stream << "URxvt*transparent:       true" << endl;
             stream << "URxvt*shading:       " << ui->horizontalSliderShading->value() << endl << endl;
         }else{
-            stream << "URxvt*transparent:   false" << endl << endl;
+            stream << "URxvt*transparent:       false" << endl << endl;
         }
 
         if(ui->checkBoxTrueTransparencyEnabled->isChecked()){
             stream << "URxvt*depth: 32" << endl;
-            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl;
+            stream << "URxvt.background: [" << ui->spinBoxShading->value() << "]" << ui->lineEditColor2->text() << endl << endl;
         }
 
         // Font
 
         QString current = ui->fontComboBox->currentFont().toString();
         current.chop(20);
-        stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl << endl;
+        stream << "URxvt.font: xft:" << current.left(current.length()-1) << ":pixelsize=" << ui->spinBoxFontSize->value() << endl;
 
         if(ui->checkBoxFontBoldDisable->isChecked()){
             stream << "URxvt.boldFont:" << endl;
         }
 
-        stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl;
+        stream << "URxvt.letterSpace: " << ui->spinBoxFontSpacing->value() << endl << endl;
 
         if(ui->checkBoxFontAntialiasing->isChecked())
         {
@@ -394,9 +394,9 @@ void URXVTConfig::saveToFile(QString target)
 
         if(ui->checkBoxFontHinting->isChecked())
         {
-            stream << "*autohint:  true" << endl;
+            stream << "*autohint:   true" << endl << endl;
         }else{
-            stream << "*autohint:  false" << endl << endl;
+            stream << "*autohint:   false" << endl << endl;
         }
 
         // Plugins
@@ -404,7 +404,7 @@ void URXVTConfig::saveToFile(QString target)
         if(ui->checkBoxClickableUrls->isChecked())
         {
             stream << "URxvt.perl-ext-common: default,matcher" << endl;
-            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text() << endl;
+            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text();
             stream << "URxvt.matcher.button: 1" << endl << endl;
         }
 
