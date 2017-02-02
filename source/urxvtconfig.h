@@ -112,6 +112,18 @@ private slots:
 
     void on_checkBoxTabs_clicked();
 
+    void on_actionIsotope_Dark_triggered();
+
+    void on_actionIsotope_Light_triggered();
+
+    void on_actionOcean_Dark_triggered();
+
+    void on_actionOcean_Light_triggered();
+
+    void on_actionParaiso_Dark_triggered();
+
+    void on_actionParaiso_Light_triggered();
+
 private:
     Ui::URXVTConfig *ui;
 };

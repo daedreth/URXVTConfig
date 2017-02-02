@@ -1040,5 +1040,44 @@ void URXVTConfig::on_actionMocha_Light_triggered()
     updatePreview();
 }
 
+void URXVTConfig::on_actionIsotope_Dark_triggered()
+{
+    QString preset = "#d0d0d0,#000000,#d0d0d0,#000000,#808080,#ff0000,#ff0000,#33ff00,#33ff00,#ff0099,#ff0099,#0066ff,#0066ff,#cc00ff,#cc00ff,#00ffff,#00ffff,#d0d0d0,#ffffff";
+    loadPreset(preset);
+    updatePreview();
+}
 
+void URXVTConfig::on_actionIsotope_Light_triggered()
+{
+    QString preset = "#606060,#ffffff,#606060,#000000,#808080,#ff0000,#ff0000,#33ff00,#33ff00,#ff0099,#ff0099,#0066ff,#0066ff,#cc00ff,#cc00ff,#00ffff,#00ffff,#d0d0d0,#ffffff";
+    loadPreset(preset);
+    updatePreview();
+}
 
+void URXVTConfig::on_actionOcean_Dark_triggered()
+{
+    QString preset = "#c0c5ce,#2b303b,#c0c5ce,#2b303b,#65737e,#bf616a,#bf616a,#a3be8c,#a3be8c,#ebcb8b,#ebcb8b,#8fa1b3,#8fa1b3,#b48ead,#b48ead,#96b5b4,#96b5b4,#c0c5ce,#eff1f5";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionOcean_Light_triggered()
+{
+    QString preset = "#4f5b66,#eff1f5,#4f5b66,#2b303b,#65737e,#bf616a,#bf616a,#a3be8c,#a3be8c,#ebcb8b,#ebcb8b,#8fa1b3,#8fa1b3,#b48ead,#b48ead,#96b5b4,#96b5b4,#c0c5ce,#eff1f5";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionParaiso_Dark_triggered()
+{
+    QString preset = "#a39e9b,#2f1e2e,#a39e9b,#2f1e2e,#776e71,#ef6155,#ef6155,#48b685,#48b685,#fec418,#fec418,#06b6ef,#06b6ef,#815ba4,#815ba4,#5bc4bf,#5bc4bf,#a39e9b,#e7e9db";
+    loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_actionParaiso_Light_triggered()
+{
+    QString preset = "#4f424c,#e7e9db,#4f424c,#2f1e2e,#776e71,#ef6155,#ef6155,#48b685,#48b685,#fec418,#fec418,#06b6ef,#06b6ef,#815ba4,#815ba4,#5bc4bf,#5bc4bf,#a39e9b,#e7e9db";
+    loadPreset(preset);
+    updatePreview();
+}

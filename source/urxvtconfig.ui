@@ -1098,12 +1098,36 @@
      <addaction name="actionMocha_Dark"/>
      <addaction name="actionMocha_Light"/>
     </widget>
+    <widget class="QMenu" name="menuIsotope">
+     <property name="title">
+      <string>Isotope</string>
+     </property>
+     <addaction name="actionIsotope_Dark"/>
+     <addaction name="actionIsotope_Light"/>
+    </widget>
+    <widget class="QMenu" name="menuOcean">
+     <property name="title">
+      <string>Ocean</string>
+     </property>
+     <addaction name="actionOcean_Dark"/>
+     <addaction name="actionOcean_Light"/>
+    </widget>
+    <widget class="QMenu" name="menuParaiso">
+     <property name="title">
+      <string>Paraiso</string>
+     </property>
+     <addaction name="actionParaiso_Dark"/>
+     <addaction name="actionParaiso_Light"/>
+    </widget>
     <addaction name="menuSolarized"/>
     <addaction name="menuGreyscale"/>
     <addaction name="menuEmbers"/>
     <addaction name="menuCodeschool"/>
     <addaction name="menuGreenscreen"/>
     <addaction name="menuMocha"/>
+    <addaction name="menuIsotope"/>
+    <addaction name="menuOcean"/>
+    <addaction name="menuParaiso"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPresets"/>
@@ -1231,6 +1255,36 @@
   <action name="actionMocha_Light">
    <property name="text">
     <string>Mocha Light</string>
+   </property>
+  </action>
+  <action name="actionIsotope_Dark">
+   <property name="text">
+    <string>Isotope Dark</string>
+   </property>
+  </action>
+  <action name="actionIsotope_Light">
+   <property name="text">
+    <string>Isotope Light</string>
+   </property>
+  </action>
+  <action name="actionOcean_Dark">
+   <property name="text">
+    <string>Ocean Dark</string>
+   </property>
+  </action>
+  <action name="actionOcean_Light">
+   <property name="text">
+    <string>Ocean Light</string>
+   </property>
+  </action>
+  <action name="actionParaiso_Dark">
+   <property name="text">
+    <string>Paraiso Dark</string>
+   </property>
+  </action>
+  <action name="actionParaiso_Light">
+   <property name="text">
+    <string>Paraiso Light</string>
    </property>
   </action>
  </widget>
