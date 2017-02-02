@@ -19,5 +19,9 @@ HEADERS  += urxvtconfig.h
 
 FORMS    += urxvtconfig.ui
 
+shortcut.path = /usr/share/applications
+shortcut.files = urxvtconfig.desktop
 target.path = /usr/bin
-INSTALLS += target
+
+INSTALLS += target shortcut
+

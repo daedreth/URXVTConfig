@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=URXVTConfig
+Type=Application
+Comment=configuration tool for rxvt-unicode
+Exec=urxvtconfig
+TryExec=urxvtconfig
+Icon=utilities-terminal
+Categories=System;

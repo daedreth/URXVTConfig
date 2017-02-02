@@ -56,6 +56,7 @@ Requires qt4 and is highly encouraged.
   ~~~ sh
   $ git clone https://github.com/daedreth/URXVTConfig.git
   $ cd URXVTConfig
+  $ qmake source/URXVTConfig.pro
   $ make
   $ sudo make install
   ~~~
