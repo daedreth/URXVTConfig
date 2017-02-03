@@ -853,6 +853,9 @@ void URXVTConfig::on_actionFrom_File_triggered()
 
     QProcess process;
     QString fileName = QFileDialog::getOpenFileName();
+
+    if(fileName.isEmpty()) return;
+
     QString processName = "convert ";
     processName.append(fileName);   // this launches imagemagick
     processName.append(" +dither -colors 18 -unique-colors txt:-");
