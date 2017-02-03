@@ -145,6 +145,8 @@ void setColor(QLineEdit *line)
     QColor color = QColorDialog::getColor(line->palette().color(line->backgroundRole()));
     QPalette pal = line->palette();
 
+    if(!color.isValid()) return;
+
     line->setText(color.name());
     pal.setColor(line->backgroundRole(), color);
     line->setPalette(pal);
