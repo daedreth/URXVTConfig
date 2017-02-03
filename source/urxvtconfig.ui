@@ -740,6 +740,9 @@
       <layout class="QHBoxLayout" name="horizontalLayout_32">
        <item>
         <widget class="QCheckBox" name="checkBoxClickableUrls">
+         <property name="toolTip">
+          <string>URLs will be underlined and clickable.</string>
+         </property>
          <property name="text">
           <string>Clickable URLs:</string>
          </property>
@@ -747,6 +750,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEditBrowser">
+         <property name="toolTip">
+          <string>Use the full path to a browser here.</string>
+         </property>
          <property name="text">
           <string>Browser?</string>
          </property>
@@ -759,6 +765,9 @@
      </item>
      <item row="3" column="0">
       <widget class="QCheckBox" name="checkBoxTabs">
+       <property name="toolTip">
+        <string>The colours are predefined by the ones chosen on the left side.</string>
+       </property>
        <property name="text">
         <string>Tabs</string>
        </property>
@@ -800,6 +809,9 @@
       <layout class="QHBoxLayout" name="horizontalLayout_34">
        <item>
         <widget class="QCheckBox" name="checkBoxTransparencyEnabled">
+         <property name="toolTip">
+          <string>Enable fake transparency. No composite manager necessary.</string>
+         </property>
          <property name="text">
           <string>Fake Transparency</string>
          </property>
@@ -807,6 +819,9 @@
        </item>
        <item>
         <widget class="QCheckBox" name="checkBoxTrueTransparencyEnabled">
+         <property name="toolTip">
+          <string>Enable true transparency using your composite manager.</string>
+         </property>
          <property name="text">
           <string>True Transparency</string>
          </property>
@@ -852,6 +867,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_28">
          <item>
           <widget class="QCheckBox" name="checkBoxScrollbarEnabled">
+           <property name="toolTip">
+            <string>You can still scroll even without a scrollbar.</string>
+           </property>
            <property name="text">
             <string>Enable Scrollbar</string>
            </property>
@@ -859,6 +877,9 @@
          </item>
          <item>
           <widget class="QCheckBox" name="checkBoxScrollbarRight">
+           <property name="toolTip">
+            <string>The default scrollbar is on the left, enable this to move it to the right.</string>
+           </property>
            <property name="text">
             <string>Scrollbar on the right</string>
            </property>
@@ -886,6 +907,9 @@
       <layout class="QHBoxLayout" name="horizontalLayout_29">
        <item>
         <widget class="QLabel" name="labelCurrentFont">
+         <property name="toolTip">
+          <string>This is the current font.</string>
+         </property>
          <property name="text">
           <string>-</string>
          </property>
@@ -1008,6 +1032,9 @@
      </item>
      <item row="11" column="0">
       <widget class="QCheckBox" name="checkBoxFontBoldDisable">
+       <property name="toolTip">
+        <string>Check this if you would like to not use boldness in your terminal.</string>
+       </property>
        <property name="text">
         <string>Bold Font Disable</string>
        </property>
