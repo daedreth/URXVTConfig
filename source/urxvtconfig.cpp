@@ -253,7 +253,7 @@ void URXVTConfig::saveToFile(QString target)
     }else if(target=="xresources"){
         pathToFile =  "/home/"+ qgetenv("USER") +"/.Xresources";
     }else if(target=="other"){
-        pathToFile = QFileDialog::getSaveFileName();
+        pathToFile = QFileDialog::getSaveFileName(this,tr("Save File"),"/home/"+qgetenv("USER")+"/Xresources");
     }
 
     if((target == "xdefaults" && QFileInfo(pathToFile).exists()) || (target == "xresources" && QFileInfo(pathToFile).exists())){
@@ -267,7 +267,6 @@ void URXVTConfig::saveToFile(QString target)
 
         if(ret == QMessageBox::Yes)
         {
-            //QString backupLocation = QFileDialog::getSaveFileName();
             QString backupLocation = QFileDialog::getSaveFileName(this,tr("Save File"),"/home/"+qgetenv("USER")+"/.Xresources_Bak");
             if(target == "xdefaults")
             {
@@ -441,7 +440,7 @@ void URXVTConfig::openFromFile(QString target)
     }else if(target=="xresources"){
         pathToFile =  "/home/"+ qgetenv("USER") +"/.Xresources";
     }else if(target=="other"){
-        pathToFile = QFileDialog::getOpenFileName();
+        pathToFile = QFileDialog::getOpenFileName(this,tr("Open File"),"/home/"+qgetenv("USER")+"/");
     }
 
 
@@ -852,7 +851,7 @@ void URXVTConfig::on_actionFrom_File_triggered()
     }
 
     QProcess process;
-    QString fileName = QFileDialog::getOpenFileName();
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Image"),"/home/"+qgetenv("USER")+"/",tr("Image Files (*.png *.jpg *.bmp)"));
 
     if(fileName.isEmpty()) return;
 
