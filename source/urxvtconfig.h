@@ -124,6 +124,8 @@ private slots:
 
     void on_actionParaiso_Light_triggered();
 
+    void on_fontComboBox_currentFontChanged(const QFont &f);
+
 private:
     Ui::URXVTConfig *ui;
 };
