@@ -267,8 +267,8 @@ void URXVTConfig::saveToFile(QString target)
 
         if(ret == QMessageBox::Yes)
         {
-            QString backupLocation = QFileDialog::getSaveFileName();
-
+            //QString backupLocation = QFileDialog::getSaveFileName();
+            QString backupLocation = QFileDialog::getSaveFileName(this,tr("Save File"),"/home/"+qgetenv("USER")+"/.Xresources_Bak");
             if(target == "xdefaults")
             {
                 QFile::copy("/home/"+ qgetenv("USER") +"/.Xdefaults", backupLocation);
@@ -1084,5 +1084,10 @@ void URXVTConfig::on_actionParaiso_Light_triggered()
 {
     QString preset = "#4f424c,#e7e9db,#4f424c,#2f1e2e,#776e71,#ef6155,#ef6155,#48b685,#48b685,#fec418,#fec418,#06b6ef,#06b6ef,#815ba4,#815ba4,#5bc4bf,#5bc4bf,#a39e9b,#e7e9db";
     loadPreset(preset);
+    updatePreview();
+}
+
+void URXVTConfig::on_fontComboBox_currentFontChanged(const QFont &f)
+{
     updatePreview();
 }
