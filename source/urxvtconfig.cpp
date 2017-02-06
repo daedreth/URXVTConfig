@@ -432,7 +432,7 @@ void URXVTConfig::saveToFile(QString target)
         if(ui->checkBoxClickableUrls->isChecked())
         {
             stream << "URxvt.perl-ext-common: default,matcher" << endl;
-            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text();
+            stream << "URxvt.url-launcher: " << ui->lineEditBrowser->text() << endl;
             stream << "URxvt.matcher.button: 1" << endl << endl;
         }
 
