@@ -54,7 +54,7 @@
       <x>231</x>
       <y>371</y>
       <width>269</width>
-      <height>18</height>
+      <height>19</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -87,7 +87,7 @@
       <x>231</x>
       <y>392</y>
       <width>269</width>
-      <height>18</height>
+      <height>19</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_21">
@@ -173,7 +173,7 @@
       <x>231</x>
       <y>434</y>
       <width>281</width>
-      <height>18</height>
+      <height>19</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -259,7 +259,7 @@
       <x>231</x>
       <y>476</y>
       <width>269</width>
-      <height>18</height>
+      <height>19</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_25">
@@ -285,7 +285,7 @@
       <x>10</x>
       <y>10</y>
       <width>201</width>
-      <height>630</height>
+      <height>650</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_26">
@@ -794,7 +794,7 @@
       <x>221</x>
       <y>15</y>
       <width>371</width>
-      <height>331</height>
+      <height>342</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
@@ -1044,6 +1044,14 @@
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>22</height>
+    </rect>
+   </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
@@ -1155,12 +1163,12 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
    <property name="text">
-    <string>New</string>
+    <string>New (Ctrl + N)</string>
    </property>
   </action>
   <action name="actionOpen">
    <property name="text">
-    <string>Load from custom file...</string>
+    <string>Load from custom file... (Ctrl + O)</string>
    </property>
    <property name="toolTip">
     <string>Load</string>
@@ -1168,12 +1176,12 @@
   </action>
   <action name="actionSave">
    <property name="text">
-    <string>Save to .Xdefaults</string>
+    <string>Save to .Xdefaults (Ctrl + Shift + S)</string>
    </property>
   </action>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit</string>
+    <string>Quit (Ctrl + Q)</string>
    </property>
   </action>
   <action name="actionHelp">
@@ -1188,27 +1196,27 @@
   </action>
   <action name="actionFrom_File">
    <property name="text">
-    <string>Colors from File...</string>
+    <string>Colors from File... (Ctrl + N)</string>
    </property>
   </action>
   <action name="actionSave_to_Xresources">
    <property name="text">
-    <string>Save to .Xresources</string>
+    <string>Save to .Xresources (Ctrl + Alt + O)</string>
    </property>
   </action>
   <action name="actionSave_to_custom_file">
    <property name="text">
-    <string>Save to custom file...</string>
+    <string>Save to custom file... (Ctrl + S)</string>
    </property>
   </action>
   <action name="actionLoad_from_Xdefaults">
    <property name="text">
-    <string>Load from .Xdefaults</string>
+    <string>Load from .Xdefaults (Ctrl + Shift + O)</string>
    </property>
   </action>
   <action name="actionLoad_from_Xresourced">
    <property name="text">
-    <string>Load from .Xresources</string>
+    <string>Load from .Xresources (Ctrl + Alt + O)</string>
    </property>
   </action>
   <action name="actionDark">

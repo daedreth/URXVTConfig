@@ -8,6 +8,7 @@
 #include "QFileDialog"
 #include "QProcess"
 #include "QFileInfo"
+#include "QShortcut"
 
 URXVTConfig::URXVTConfig(QWidget *parent) :
     QMainWindow(parent),
@@ -25,11 +26,37 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
 
     ui->lineEditBrowser->setDisabled(true);
     ui->checkBoxTabs->setChecked(false);
+
+    // Shortcuts
+
+    QShortcut* newShortcut = new QShortcut(QKeySequence("Ctrl+N"), this);
+    QObject::connect(newShortcut,SIGNAL(activated()),this,SLOT(on_actionNew_triggered()));
+
+    QShortcut* loadShortcut = new QShortcut(QKeySequence("Ctrl+O"), this);
+    QObject::connect(loadShortcut,SIGNAL(activated()),this,SLOT(on_actionOpen_triggered()));
+    QShortcut* loadXdefShortcut = new QShortcut(QKeySequence("Ctrl+Shift+O"), this);
+    QObject::connect(loadXdefShortcut,SIGNAL(activated()),this,SLOT(on_actionLoad_from_Xdefaults_triggered()));
+    QShortcut* loadXresShortcut = new QShortcut(QKeySequence("Ctrl+Alt+O"), this);
+    QObject::connect(loadXresShortcut,SIGNAL(activated()),this,SLOT(on_actionLoad_from_Xresourced_triggered()));
+
+    QShortcut* saveShortcut = new QShortcut(QKeySequence("Ctrl+S"), this);
+    QObject::connect(saveShortcut,SIGNAL(activated()),this,SLOT(on_actionSave_to_custom_file_triggered()));
+    QShortcut* saveXdefShortcut = new QShortcut(QKeySequence("Ctrl+Shift+S"), this);
+    QObject::connect(saveXdefShortcut,SIGNAL(activated()),this,SLOT(on_actionSave_triggered()));
+    QShortcut* saveXresShortcut = new QShortcut(QKeySequence("Ctrl+Alt+S"), this);
+    QObject::connect(saveXresShortcut,SIGNAL(activated()),this,SLOT(on_actionSave_to_Xresources_triggered()));
+
+    QShortcut* fromFileShortcut = new QShortcut(QKeySequence("Ctrl+F"), this);
+    QObject::connect(fromFileShortcut,SIGNAL(activated()),this,SLOT(on_actionFrom_File_triggered()));
+
+    QShortcut* quitShortcut = new QShortcut(QKeySequence("Ctrl+Q"), this);
+    QObject::connect(quitShortcut,SIGNAL(activated()),this,SLOT(on_actionQuit_triggered()));
 }
 
 // setting up the filepaths
 QString pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
 QString pathToFileResources = "/home/"+ qgetenv("USER") +"/.Xresources";
+
 bool extensionFlag = false;
 
 URXVTConfig::~URXVTConfig()
@@ -441,6 +468,7 @@ void URXVTConfig::openFromFile(QString target)
         pathToFile =  "/home/"+ qgetenv("USER") +"/.Xresources";
     }else if(target=="other"){
         pathToFile = QFileDialog::getOpenFileName(this,tr("Open File"),"/home/"+qgetenv("USER")+"/");
+        if(pathToFile.isEmpty()) return;
     }
 
 
