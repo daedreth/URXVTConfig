@@ -172,13 +172,25 @@
      <rect>
       <x>231</x>
       <y>434</y>
-      <width>281</width>
+      <width>321</width>
       <height>19</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_23">
      <item>
       <widget class="QLabel" name="labelPreviewRow4">
+       <property name="minimumSize">
+        <size>
+         <width>20</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>20</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>4.</string>
        </property>
@@ -1160,7 +1172,6 @@
    <addaction name="menuPresets"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
    <property name="text">
     <string>New (Ctrl + N)</string>
