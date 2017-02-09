@@ -18,6 +18,7 @@ public:
     void loadPreset(QString preset);
     void saveToFile(QString target);
     void openFromFile(QString target);
+    void loadConfig();
 
 private slots:
     void on_actionNew_triggered();
@@ -124,7 +125,7 @@ private slots:
 
     void on_actionParaiso_Light_triggered();
 
-    void on_fontComboBox_currentFontChanged(const QFont &f);
+    void on_fontComboBox_currentFontChanged();
 
 private:
     Ui::URXVTConfig *ui;

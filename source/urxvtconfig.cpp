@@ -51,17 +51,41 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
 
     QShortcut* quitShortcut = new QShortcut(QKeySequence("Ctrl+Q"), this);
     QObject::connect(quitShortcut,SIGNAL(activated()),this,SLOT(on_actionQuit_triggered()));
+
+    loadConfig();
 }
 
 // setting up the filepaths
 QString pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
 QString pathToFileResources = "/home/"+ qgetenv("USER") +"/.Xresources";
+QString pathToConfig = "/home/" + qgetenv("USER") +"/.config/urxvtconfig/config";
 
 bool extensionFlag = false;
+bool backupFlag = false;
+
 
 URXVTConfig::~URXVTConfig()
 {
     delete ui;
+}
+
+void URXVTConfig::loadConfig()
+{
+    QFile configFile(pathToConfig);
+    if(!configFile.exists())
+    {
+        return;
+    }else{
+        configFile.open(QIODevice::ReadOnly);
+        for(int i = 0; i < 10; i++){
+            QString line = configFile.readLine();
+            if(line.startsWith("no_warnings:") && line.contains("true")){
+                extensionFlag = true;
+            }else if(line.startsWith("no_backups:") && line.contains("true")){
+                backupFlag = true;
+            }
+        }
+    }
 }
 
 void URXVTConfig::updatePreview()
@@ -191,18 +215,20 @@ void setColorFromLoad(QString colorString, QLineEdit *line)
 
 void URXVTConfig::on_actionNew_triggered()
 {
+    if(!extensionFlag){
+        QMessageBox msgBox;
+        msgBox.setText("Question!");
+        msgBox.setIcon(QMessageBox::Question);
+        msgBox.setInformativeText("Change all values to default?");
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::Yes);
 
-    QMessageBox msgBox;
-    msgBox.setText("Question!");
-    msgBox.setIcon(QMessageBox::Question);
-    msgBox.setInformativeText("Change all values to default?");
-    msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-    msgBox.setDefaultButton(QMessageBox::Yes);
-    int ret = msgBox.exec();
+        int ret = msgBox.exec();
 
-    if(ret == QMessageBox::No)
-    {
-        return;
+        if(ret == QMessageBox::No)
+        {
+            return;
+        }
     }
 
     // Color reset
@@ -283,7 +309,7 @@ void URXVTConfig::saveToFile(QString target)
         pathToFile = QFileDialog::getSaveFileName(this,tr("Save File"),"/home/"+qgetenv("USER")+"/Xresources");
     }
 
-    if((target == "xdefaults" && QFileInfo(pathToFile).exists()) || (target == "xresources" && QFileInfo(pathToFile).exists())){
+    if(((target == "xdefaults" && QFileInfo(pathToFile).exists()) || (target == "xresources" && QFileInfo(pathToFile).exists())) && !backupFlag){
         QMessageBox msgBox;
         msgBox.setText("Question!");
         msgBox.setIcon(QMessageBox::Question);
@@ -1114,7 +1140,7 @@ void URXVTConfig::on_actionParaiso_Light_triggered()
     updatePreview();
 }
 
-void URXVTConfig::on_fontComboBox_currentFontChanged(const QFont &f)
+void URXVTConfig::on_fontComboBox_currentFontChanged()
 {
     updatePreview();
 }
