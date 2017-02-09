@@ -54,7 +54,41 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
     QShortcut* quitShortcut = new QShortcut(QKeySequence("Ctrl+Q"), this);
     QObject::connect(quitShortcut,SIGNAL(activated()),this,SLOT(on_actionQuit_triggered()));
 
+    // config and database stuff
+
     loadConfig();
+
+    QString configDirectoryPath = "/home/"+qgetenv("USER")+"/.config/urxvtconfig/";
+
+    QDir configDirectory(configDirectoryPath);
+
+    if(!configDirectory.exists()){
+        configDirectory.mkpath(configDirectoryPath);
+    }
+
+    QString configFilePath = "/home/"+qgetenv("USER")+"/.config/urxvtconfig/config";
+    QString databaseFilePath = "/home/"+qgetenv("USER")+"/.config/urxvtconfig/presets.db";
+
+    QFile configFile(configFilePath);
+    QFile databaseFile(databaseFilePath);
+
+    if(configFile.exists()){
+
+    }else{
+        configFile.open(QIODevice::ReadWrite);
+        QTextStream stream(&configFile);
+        stream << "no_warnings: false" << endl << "no_backups: false" << endl;
+        configFile.close();
+    }
+    if(databaseFile.exists()){
+
+    }else{
+        databaseFile.open(QIODevice::ReadWrite);
+        QTextStream stream(&databaseFile);
+        stream << "Solarized Dark: #93a1a1,#002b36,#93a1a1,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3" << endl;
+        databaseFile.close();
+    }
+
 }
 
 // setting up the filepaths
