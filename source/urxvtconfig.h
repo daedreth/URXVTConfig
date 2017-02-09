@@ -129,6 +129,8 @@ private slots:
 
     void on_actionChoose_Prese_triggered();
 
+    void on_actionSave_Preset_triggered();
+
 private:
     Ui::URXVTConfig *ui;
 };

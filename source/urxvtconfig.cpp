@@ -7,6 +7,7 @@
 #include "QMessageBox"
 #include "QTextStream"
 #include "QFileDialog"
+#include "QInputDialog"
 #include "QProcess"
 #include "QFileInfo"
 #include "QShortcut"
@@ -1154,4 +1155,58 @@ void URXVTConfig::on_actionChoose_Prese_triggered()
     if(pWindow.presetColors.isEmpty()) return;
     loadPreset(pWindow.presetColors);
     updatePreview();
+}
+
+void URXVTConfig::on_actionSave_Preset_triggered()
+{
+    QString pathToDb ="/home/"+qgetenv("USER")+"/.config/urxvtconfig/presets.db";
+    QFile database(pathToDb);
+
+    if(!database.exists()){
+        QMessageBox msgBox;
+        msgBox.setText("Error!");
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setInformativeText("Database does not exist!\nPlease manually create ~/.config/urxvtconfig/presets.db");
+        msgBox.exec();
+        return;
+    }
+
+    bool noError = true;
+    QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                         tr("Theme Name:"), QLineEdit::Normal,
+                                        "MyPreset", &noError);
+    if (!noError || text.isEmpty() || text.contains(":")){
+        QMessageBox msgBox;
+        msgBox.setText("Error!");
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setInformativeText("Invalid name!");
+        msgBox.exec();
+        return;
+    }else{
+        database.open(QIODevice::Append);
+        QTextStream stream(&database);
+
+        stream << endl << text << ": ";
+        stream << ui->lineEditColor1->text() << ",";
+        stream << ui->lineEditColor2->text() << ",";
+        stream << ui->lineEditColor3->text() << ",";
+        stream << ui->lineEditColor4->text() << ",";
+        stream << ui->lineEditColor5->text() << ",";
+        stream << ui->lineEditColor6->text() << ",";
+        stream << ui->lineEditColor7->text() << ",";
+        stream << ui->lineEditColor8->text() << ",";
+        stream << ui->lineEditColor9->text() << ",";
+        stream << ui->lineEditColor10->text() << ",";
+        stream << ui->lineEditColor11->text() << ",";
+        stream << ui->lineEditColor12->text() << ",";
+        stream << ui->lineEditColor13->text() << ",";
+        stream << ui->lineEditColor14->text() << ",";
+        stream << ui->lineEditColor15->text() << ",";
+        stream << ui->lineEditColor16->text() << ",";
+        stream << ui->lineEditColor17->text() << ",";
+        stream << ui->lineEditColor18->text() << ",";
+        stream << ui->lineEditColor19->text();
+
+        database.close();
+    }
 }

@@ -30,13 +30,14 @@ void PresetWindow::loadPresets()
         QMessageBox msgBox;
         msgBox.setText("Error!");
         msgBox.setIcon(QMessageBox::Critical);
-        msgBox.setInformativeText("Database does not exist!");
+        msgBox.setInformativeText("Database does not exist!\nPlease manually create ~/.config/urxvtconfig/presets.db");
         msgBox.exec();
     }else{
         database.open(QIODevice::ReadOnly);
         while(!database.atEnd())
         {
             lineToCount = database.readLine();
+
             linecount++;
 
         }
@@ -56,7 +57,7 @@ void PresetWindow::loadPresets()
             theme->setToolTip(presetString);
             ui->listWidgetPresets->addItem(theme);
         }
-
+        database.close();
     }
 
 }
