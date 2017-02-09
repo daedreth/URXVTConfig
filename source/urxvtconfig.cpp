@@ -1,5 +1,6 @@
 #include "urxvtconfig.h"
 #include "ui_urxvtconfig.h"
+#include "presetwindow.h"
 #include "QColorDialog"
 #include "QFile"
 #include "QCheckBox"
@@ -1142,5 +1143,15 @@ void URXVTConfig::on_actionParaiso_Light_triggered()
 
 void URXVTConfig::on_fontComboBox_currentFontChanged()
 {
+    updatePreview();
+}
+
+void URXVTConfig::on_actionChoose_Prese_triggered()
+{
+    PresetWindow pWindow;
+    pWindow.setModal(true);
+    pWindow.exec();
+    if(pWindow.presetColors.isEmpty()) return;
+    loadPreset(pWindow.presetColors);
     updatePreview();
 }

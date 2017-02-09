@@ -13,11 +13,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        urxvtconfig.cpp
+        urxvtconfig.cpp \
+    presetwindow.cpp
 
-HEADERS  += urxvtconfig.h
+HEADERS  += urxvtconfig.h \
+    presetwindow.h
 
-FORMS    += urxvtconfig.ui
+FORMS    += urxvtconfig.ui \
+    presetwindow.ui
 
 shortcut.path = /usr/share/applications
 shortcut.files = urxvtconfig.desktop

@@ -127,6 +127,8 @@ private slots:
 
     void on_fontComboBox_currentFontChanged();
 
+    void on_actionChoose_Prese_triggered();
+
 private:
     Ui::URXVTConfig *ui;
 };

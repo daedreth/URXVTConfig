@@ -297,7 +297,7 @@
       <x>10</x>
       <y>10</y>
       <width>201</width>
-      <height>650</height>
+      <height>651</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_26">
@@ -730,7 +730,7 @@
       <x>221</x>
       <y>512</y>
       <width>371</width>
-      <height>91</height>
+      <height>93</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
@@ -806,7 +806,7 @@
       <x>221</x>
       <y>15</y>
       <width>371</width>
-      <height>342</height>
+      <height>343</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
@@ -1061,7 +1061,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1168,8 +1168,16 @@
     <addaction name="menuOcean"/>
     <addaction name="menuParaiso"/>
    </widget>
+   <widget class="QMenu" name="menuUser_Presets">
+    <property name="title">
+     <string>User Presets</string>
+    </property>
+    <addaction name="actionChoose_Prese"/>
+    <addaction name="actionSave_Preset"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuPresets"/>
+   <addaction name="menuUser_Presets"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionNew">
@@ -1323,6 +1331,16 @@
   <action name="actionParaiso_Light">
    <property name="text">
     <string>Paraiso Light</string>
+   </property>
+  </action>
+  <action name="actionChoose_Prese">
+   <property name="text">
+    <string>Choose Preset</string>
+   </property>
+  </action>
+  <action name="actionSave_Preset">
+   <property name="text">
+    <string>Save Preset (WIP)</string>
    </property>
   </action>
  </widget>
