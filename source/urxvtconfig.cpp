@@ -85,7 +85,7 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
     }else{
         databaseFile.open(QIODevice::ReadWrite);
         QTextStream stream(&databaseFile);
-        stream << "Solarized Dark: #93a1a1,#002b36,#93a1a1,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3" << endl;
+        stream << "Example Preset: #93a1a1,#002b36,#93a1a1,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3" << endl;
         databaseFile.close();
     }
 
@@ -1185,6 +1185,7 @@ void URXVTConfig::on_actionChoose_Prese_triggered()
 {
     PresetWindow pWindow;
     pWindow.setModal(true);
+    pWindow.setWindowTitle("My Presets:");
     pWindow.exec();
     if(pWindow.presetColors.isEmpty()) return;
     loadPreset(pWindow.presetColors);
