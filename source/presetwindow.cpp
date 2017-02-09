@@ -49,9 +49,9 @@ void PresetWindow::loadPresets()
 
         for(int i = 0; i < linecount; i++)
         {
-
             QString presetString;
             presetString = database.readLine();
+            if(presetString == "\n") continue;
             QListWidgetItem *theme = new QListWidgetItem;
             theme->setText(presetString.left(presetString.indexOf(":")));
             theme->setToolTip(presetString);

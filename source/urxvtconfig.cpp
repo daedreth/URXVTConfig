@@ -138,7 +138,6 @@ void URXVTConfig::updatePreview()
     QColor stdColor(ui->lineEditColor1->text());
     QColor commentColor(ui->lineEditColor12->text());
 
-
     // Turn colors into qpalettes
 
     QPalette backgroundPal = ui->lineEditPreviewBackground->palette();
@@ -149,7 +148,6 @@ void URXVTConfig::updatePreview()
     QPalette namespacePal = ui->labelPreviewNamespace->palette();
     QPalette stdPal = ui->labelPreviewStd->palette();
     QPalette commentPal = ui->labelPreviewComment->palette();
-
 
     // Apply color settings to UI
 
@@ -923,6 +921,7 @@ void URXVTConfig::loadPreset(QString preset)
     presetString.remove(0,presetString.indexOf('#', 3));
     ui->lineEditColor19->setText(presetString.left(7));
     setColorDefault(ui->lineEditColor19, presetString.left(7));
+    updatePreview();
 }
 
 void URXVTConfig::on_actionFrom_File_triggered()
@@ -952,7 +951,6 @@ void URXVTConfig::on_actionFrom_File_triggered()
     process.waitForFinished(-1);
 
     QString stdout = process.readAllStandardOutput();
-
 
     stdout.remove(0,stdout.indexOf('#', 3));
         ui->lineEditColor19->setText(stdout.left(7));
@@ -1044,137 +1042,9 @@ void URXVTConfig::on_actionAbout_triggered()
 void URXVTConfig::on_actionQuit_triggered()
 {
     // Quit the application
-
     QApplication::quit();
 }
 
-    // Preset color schemes
-
-void URXVTConfig::on_actionSolarized_Dark_triggered()
-{
-    QString preset = "#93a1a1,#002b36,#93a1a1,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionSolarized_Light_triggered()
-{
-    QString preset = "#586e75,#fdf6e3,#586e75,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionGreyscale_Dark_triggered()
-{
-    QString preset = "#b9b9b9,#101010,#b9b9b9,#101010,#525252,#7c7c7c,#7c7c7c,#8e8e8e,#8e8e8e,#a0a0a0,#a0a0a0,#686868,#686868,#747474,#747474,#868686,#868686,#b9b9b9,#f7f7f7";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionGreyscale_Light_triggered()
-{
-    QString preset = "#464646,#f7f7f7,#464646,#101010,#525252,#7c7c7c,#7c7c7c,#8e8e8e,#8e8e8e,#a0a0a0,#a0a0a0,#686868,#686868,#747474,#747474,#868686,#868686,#b9b9b9,#f7f7f7";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionCodeschool_Dark_triggered()
-{
-    QString preset = "#9ea7a6,#232c31,#9ea7a6,#232c31,#3f4944,#2a5491,#2a5491,#237986,#237986,#a03b1e,#a03b1e,#484d79,#484d79,#c59820,#c59820,#b02f30,#b02f30,#9ea7a6,#b5d8f6";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionCodeschool_Light_triggered()
-{
-    QString preset = "#2a343a,#b5d8f6,#2a343a,#232c31,#3f4944,#2a5491,#2a5491,#237986,#237986,#a03b1e,#a03b1e,#484d79,#484d79,#c59820,#c59820,#b02f30,#b02f30,#9ea7a6,#b5d8f6";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionEmbers_Dark_triggered()
-{
-    QString preset = "#a39a90,#16130f,#a39a90,#16130f,#5a5047,#826d57,#826d57,#57826d,#57826d,#6d8257,#6d8257,#6d5782,#6d5782,#82576d,#82576d,#576d82,#576d82,#a39a90,#dbd6d1";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionEmbers_Light_triggered()
-{
-    QString preset = "#433b32,#dbd6d1,#433b32,#16130f,#5a5047,#826d57,#826d57,#57826d,#57826d,#6d8257,#6d8257,#6d5782,#6d5782,#82576d,#82576d,#576d82,#576d82,#a39a90,#dbd6d1";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionGreenscreen_Dark_triggered()
-{
-    QString preset = "#00bb00,#001100,#00bb00,#001100,#007700,#007700,#007700,#00bb00,#00bb00,#007700,#007700,#009900,#009900,#00bb00,#00bb00,#005500,#005500,#00bb00,#00ff00";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionGreenscreen_Light_triggered()
-{
-    QString preset = "#005500,#00ff00,#005500,#001100,#007700,#007700,#007700,#00bb00,#00bb00,#007700,#007700,#009900,#009900,#00bb00,#00bb00,#005500,#005500,#00bb00,#00ff00";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionMocha_Dark_triggered()
-{
-    QString preset = "#d0c8c6,#3b3228,#d0c8c6,#3b3228,#7e705a,#cb6077,#cb6077,#beb55b,#beb55b,#f4bc87,#f4bc87,#8ab3b5,#8ab3b5,#a89bb9,#a89bb9,#7bbda4,#7bbda4,#d0c8c6,f5eeeb";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionMocha_Light_triggered()
-{
-    QString preset = "#645240,#f5eeeb,#645240,#3b3228,#7e705a,#cb6077,#cb6077,#beb55b,#beb55b,#f4bc87,#f4bc87,#8ab3b5,#8ab3b5,#a89bb9,#a89bb9,#7bbda4,#7bbda4,#d0c8c6,f5eeeb";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionIsotope_Dark_triggered()
-{
-    QString preset = "#d0d0d0,#000000,#d0d0d0,#000000,#808080,#ff0000,#ff0000,#33ff00,#33ff00,#ff0099,#ff0099,#0066ff,#0066ff,#cc00ff,#cc00ff,#00ffff,#00ffff,#d0d0d0,#ffffff";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionIsotope_Light_triggered()
-{
-    QString preset = "#606060,#ffffff,#606060,#000000,#808080,#ff0000,#ff0000,#33ff00,#33ff00,#ff0099,#ff0099,#0066ff,#0066ff,#cc00ff,#cc00ff,#00ffff,#00ffff,#d0d0d0,#ffffff";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionOcean_Dark_triggered()
-{
-    QString preset = "#c0c5ce,#2b303b,#c0c5ce,#2b303b,#65737e,#bf616a,#bf616a,#a3be8c,#a3be8c,#ebcb8b,#ebcb8b,#8fa1b3,#8fa1b3,#b48ead,#b48ead,#96b5b4,#96b5b4,#c0c5ce,#eff1f5";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionOcean_Light_triggered()
-{
-    QString preset = "#4f5b66,#eff1f5,#4f5b66,#2b303b,#65737e,#bf616a,#bf616a,#a3be8c,#a3be8c,#ebcb8b,#ebcb8b,#8fa1b3,#8fa1b3,#b48ead,#b48ead,#96b5b4,#96b5b4,#c0c5ce,#eff1f5";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionParaiso_Dark_triggered()
-{
-    QString preset = "#a39e9b,#2f1e2e,#a39e9b,#2f1e2e,#776e71,#ef6155,#ef6155,#48b685,#48b685,#fec418,#fec418,#06b6ef,#06b6ef,#815ba4,#815ba4,#5bc4bf,#5bc4bf,#a39e9b,#e7e9db";
-    loadPreset(preset);
-    updatePreview();
-}
-
-void URXVTConfig::on_actionParaiso_Light_triggered()
-{
-    QString preset = "#4f424c,#e7e9db,#4f424c,#2f1e2e,#776e71,#ef6155,#ef6155,#48b685,#48b685,#fec418,#fec418,#06b6ef,#06b6ef,#815ba4,#815ba4,#5bc4bf,#5bc4bf,#a39e9b,#e7e9db";
-    loadPreset(preset);
-    updatePreview();
-}
 
 void URXVTConfig::on_fontComboBox_currentFontChanged()
 {
@@ -1210,6 +1080,7 @@ void URXVTConfig::on_actionSave_Preset_triggered()
     QString text = QInputDialog::getText(this, tr("QInputDialog::getText()"),
                                          tr("Theme Name:"), QLineEdit::Normal,
                                         "MyPreset", &noError);
+
     if (!noError || text.isEmpty() || text.contains(":")){
         QMessageBox msgBox;
         msgBox.setText("Error!");
@@ -1244,4 +1115,114 @@ void URXVTConfig::on_actionSave_Preset_triggered()
 
         database.close();
     }
+}
+
+    // Preset color schemes
+
+void URXVTConfig::on_actionSolarized_Dark_triggered()
+{
+    QString preset = "#93a1a1,#002b36,#93a1a1,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionSolarized_Light_triggered()
+{
+    QString preset = "#586e75,#fdf6e3,#586e75,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionGreyscale_Dark_triggered()
+{
+    QString preset = "#b9b9b9,#101010,#b9b9b9,#101010,#525252,#7c7c7c,#7c7c7c,#8e8e8e,#8e8e8e,#a0a0a0,#a0a0a0,#686868,#686868,#747474,#747474,#868686,#868686,#b9b9b9,#f7f7f7";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionGreyscale_Light_triggered()
+{
+    QString preset = "#464646,#f7f7f7,#464646,#101010,#525252,#7c7c7c,#7c7c7c,#8e8e8e,#8e8e8e,#a0a0a0,#a0a0a0,#686868,#686868,#747474,#747474,#868686,#868686,#b9b9b9,#f7f7f7";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionCodeschool_Dark_triggered()
+{
+    QString preset = "#9ea7a6,#232c31,#9ea7a6,#232c31,#3f4944,#2a5491,#2a5491,#237986,#237986,#a03b1e,#a03b1e,#484d79,#484d79,#c59820,#c59820,#b02f30,#b02f30,#9ea7a6,#b5d8f6";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionCodeschool_Light_triggered()
+{
+    QString preset = "#2a343a,#b5d8f6,#2a343a,#232c31,#3f4944,#2a5491,#2a5491,#237986,#237986,#a03b1e,#a03b1e,#484d79,#484d79,#c59820,#c59820,#b02f30,#b02f30,#9ea7a6,#b5d8f6";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionEmbers_Dark_triggered()
+{
+    QString preset = "#a39a90,#16130f,#a39a90,#16130f,#5a5047,#826d57,#826d57,#57826d,#57826d,#6d8257,#6d8257,#6d5782,#6d5782,#82576d,#82576d,#576d82,#576d82,#a39a90,#dbd6d1";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionEmbers_Light_triggered()
+{
+    QString preset = "#433b32,#dbd6d1,#433b32,#16130f,#5a5047,#826d57,#826d57,#57826d,#57826d,#6d8257,#6d8257,#6d5782,#6d5782,#82576d,#82576d,#576d82,#576d82,#a39a90,#dbd6d1";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionGreenscreen_Dark_triggered()
+{
+    QString preset = "#00bb00,#001100,#00bb00,#001100,#007700,#007700,#007700,#00bb00,#00bb00,#007700,#007700,#009900,#009900,#00bb00,#00bb00,#005500,#005500,#00bb00,#00ff00";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionGreenscreen_Light_triggered()
+{
+    QString preset = "#005500,#00ff00,#005500,#001100,#007700,#007700,#007700,#00bb00,#00bb00,#007700,#007700,#009900,#009900,#00bb00,#00bb00,#005500,#005500,#00bb00,#00ff00";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionMocha_Dark_triggered()
+{
+    QString preset = "#d0c8c6,#3b3228,#d0c8c6,#3b3228,#7e705a,#cb6077,#cb6077,#beb55b,#beb55b,#f4bc87,#f4bc87,#8ab3b5,#8ab3b5,#a89bb9,#a89bb9,#7bbda4,#7bbda4,#d0c8c6,f5eeeb";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionMocha_Light_triggered()
+{
+    QString preset = "#645240,#f5eeeb,#645240,#3b3228,#7e705a,#cb6077,#cb6077,#beb55b,#beb55b,#f4bc87,#f4bc87,#8ab3b5,#8ab3b5,#a89bb9,#a89bb9,#7bbda4,#7bbda4,#d0c8c6,f5eeeb";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionIsotope_Dark_triggered()
+{
+    QString preset = "#d0d0d0,#000000,#d0d0d0,#000000,#808080,#ff0000,#ff0000,#33ff00,#33ff00,#ff0099,#ff0099,#0066ff,#0066ff,#cc00ff,#cc00ff,#00ffff,#00ffff,#d0d0d0,#ffffff";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionIsotope_Light_triggered()
+{
+    QString preset = "#606060,#ffffff,#606060,#000000,#808080,#ff0000,#ff0000,#33ff00,#33ff00,#ff0099,#ff0099,#0066ff,#0066ff,#cc00ff,#cc00ff,#00ffff,#00ffff,#d0d0d0,#ffffff";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionOcean_Dark_triggered()
+{
+    QString preset = "#c0c5ce,#2b303b,#c0c5ce,#2b303b,#65737e,#bf616a,#bf616a,#a3be8c,#a3be8c,#ebcb8b,#ebcb8b,#8fa1b3,#8fa1b3,#b48ead,#b48ead,#96b5b4,#96b5b4,#c0c5ce,#eff1f5";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionOcean_Light_triggered()
+{
+    QString preset = "#4f5b66,#eff1f5,#4f5b66,#2b303b,#65737e,#bf616a,#bf616a,#a3be8c,#a3be8c,#ebcb8b,#ebcb8b,#8fa1b3,#8fa1b3,#b48ead,#b48ead,#96b5b4,#96b5b4,#c0c5ce,#eff1f5";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionParaiso_Dark_triggered()
+{
+    QString preset = "#a39e9b,#2f1e2e,#a39e9b,#2f1e2e,#776e71,#ef6155,#ef6155,#48b685,#48b685,#fec418,#fec418,#06b6ef,#06b6ef,#815ba4,#815ba4,#5bc4bf,#5bc4bf,#a39e9b,#e7e9db";
+    loadPreset(preset);
+}
+
+void URXVTConfig::on_actionParaiso_Light_triggered()
+{
+    QString preset = "#4f424c,#e7e9db,#4f424c,#2f1e2e,#776e71,#ef6155,#ef6155,#48b685,#48b685,#fec418,#fec418,#06b6ef,#06b6ef,#815ba4,#815ba4,#5bc4bf,#5bc4bf,#a39e9b,#e7e9db";
+    loadPreset(preset);
 }
