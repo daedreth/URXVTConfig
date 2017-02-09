@@ -2,7 +2,7 @@
 A graphical user interface tool for configuration of the rxvt-unicode terminal emulator.
 
 
-![urxvtconfig screenshot](http://i.imgur.com/8F1gDHe.png)
+![urxvtconfig screenshot](http://i.imgur.com/LeCmAJ7.png)
 
 
 # How-to
