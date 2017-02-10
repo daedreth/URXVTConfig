@@ -72,17 +72,14 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
     QFile configFile(configFilePath);
     QFile databaseFile(databaseFilePath);
 
-    if(configFile.exists()){
+    if(!configFile.exists()){
 
-    }else{
         configFile.open(QIODevice::ReadWrite);
         QTextStream stream(&configFile);
         stream << "no_warnings: false" << endl << "no_backups: false" << endl;
         configFile.close();
     }
-    if(databaseFile.exists()){
-
-    }else{
+    if(!databaseFile.exists()){
         databaseFile.open(QIODevice::ReadWrite);
         QTextStream stream(&databaseFile);
         stream << "Example Preset: #93a1a1,#002b36,#93a1a1,#002b36,#657b83,#dc322f,#dc322f,#859900,#859900,#b58900,#b58900,#268bd2,#268bd2,#6c71c4,#6c71c4,#2aa198,#2aa198,#93a1a1,#fdf6e3" << endl;
@@ -639,7 +636,7 @@ void URXVTConfig::openFromFile(QString target)
         }else if(line.startsWith("URxvt.font:")){
             ui->spinBoxFontSize->setValue(line.mid(line.length()-3, 2).toInt());
             line = line.mid(16);
-            ui->labelCurrentFont->setText(line.left(line.length() - 14));
+            ui->fontComboBox->setCurrentFont(line.left(line.length() - 14));
         }else if(line.startsWith("URxvt.boldFont:")){
             ui->checkBoxFontBoldDisable->setChecked(true);
         }else if(line.startsWith("URxvt.letterSpa")){

@@ -60,6 +60,18 @@
     <layout class="QHBoxLayout" name="horizontalLayout_20">
      <item>
       <widget class="QLabel" name="labelPreviewRow1">
+       <property name="minimumSize">
+        <size>
+         <width>20</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>20</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>1.</string>
        </property>
@@ -67,6 +79,18 @@
      </item>
      <item>
       <widget class="QLabel" name="labelPreviewInclude">
+       <property name="minimumSize">
+        <size>
+         <width>70</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="text">
         <string>#include</string>
        </property>
@@ -921,20 +945,13 @@
      <item row="7" column="0">
       <layout class="QHBoxLayout" name="horizontalLayout_29">
        <item>
-        <widget class="QLabel" name="labelCurrentFont">
-         <property name="toolTip">
-          <string>This is the current font.</string>
-         </property>
-         <property name="text">
-          <string>-</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QFontComboBox" name="fontComboBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>125</width>
@@ -943,7 +960,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>125</width>
+           <width>131434</width>
            <height>16777215</height>
           </size>
          </property>
