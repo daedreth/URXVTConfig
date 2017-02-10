@@ -30,7 +30,7 @@ A graphical user interface tool for configuration of the rxvt-unicode terminal e
 
 
 # Dependancies
-`qt4` - For the GUI.
+`qt5` - For the GUI.
 
 `imagemagick` - For generating color schemes from files.
 
@@ -58,19 +58,19 @@ I highly recommend to build it yourself as described just below:
 
 
 # Build it yourself
-Requires qt4 (qmake) and is highly encouraged.
+Requires qt5 (qmake) and is highly encouraged.
 
   ~~~ sh
   $ git clone https://github.com/daedreth/URXVTConfig.git
   $ cd URXVTConfig
-  $ qmake source/URXVTConfig.pro
+  $ qmake -qt=qt5 source/URXVTConfig.pro
   $ make
   $ sudo make install
   ~~~
 
 If qmake does **not** appear to be working, you have to specify the full path to the qmake executable.
 
-`/usr/lib64/qt4/bin/qmake source/URXVTConfig.pro`
+`/usr/lib64/qt5/bin/qmake source/URXVTConfig.pro`
 
 
 # Colors from file
