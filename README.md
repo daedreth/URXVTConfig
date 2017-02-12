@@ -2,7 +2,7 @@
 A graphical user interface tool for configuration of the rxvt-unicode terminal emulator.
 
 
-![urxvtconfig screenshot](http://i.imgur.com/LeCmAJ7.png)
+![urxvtconfig screenshot](http://i.imgur.com/vCnijHx.png)
 
 
 # How-to
@@ -49,6 +49,14 @@ We're on the AUR now, use your favorite AUR helper.
 **https://aur.archlinux.org/packages/urxvtconfig**
 
 This will build from the latest commit on the "master" branch.
+
+- Gentoo
+
+`urxvtconfig` is part of the main portage tree.
+
+**https://packages.gentoo.org/packages/x11-misc/urxvtconfig**
+
+Sync your portage and `emerge --ask --verbose x11-misc/urxvtconfig`
 
 - Other distributions
 
