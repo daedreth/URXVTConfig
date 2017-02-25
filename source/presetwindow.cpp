@@ -19,7 +19,7 @@ PresetWindow::~PresetWindow()
 
 void PresetWindow::loadPresets()
 {
-    QString pathToDatabase = "/home/"+qgetenv("USER")+"/.config/urxvtconfig/presets.db";
+    QString pathToDatabase = qgetenv("HOME") + "/.config/urxvtconfig/presets.db";
     QFile database(pathToDatabase);
     QString lineToCount;
     int linecount = 0;

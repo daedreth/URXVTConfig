@@ -58,7 +58,7 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
 
     loadConfig();
 
-    QString configDirectoryPath = "/home/"+qgetenv("USER")+"/.config/urxvtconfig/";
+    QString configDirectoryPath = qgetenv("HOME") + "/.config/urxvtconfig/";
 
     QDir configDirectory(configDirectoryPath);
 
@@ -66,8 +66,8 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
         configDirectory.mkpath(configDirectoryPath);
     }
 
-    QString configFilePath = "/home/"+qgetenv("USER")+"/.config/urxvtconfig/config";
-    QString databaseFilePath = "/home/"+qgetenv("USER")+"/.config/urxvtconfig/presets.db";
+    QString configFilePath = qgetenv("HOME") + "/.config/urxvtconfig/config";
+    QString databaseFilePath = qgetenv("HOME") + "/.config/urxvtconfig/presets.db";
 
     QFile configFile(configFilePath);
     QFile databaseFile(databaseFilePath);
@@ -89,9 +89,9 @@ URXVTConfig::URXVTConfig(QWidget *parent) :
 }
 
 // setting up the filepaths
-QString pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
-QString pathToFileResources = "/home/"+ qgetenv("USER") +"/.Xresources";
-QString pathToConfig = "/home/" + qgetenv("USER") +"/.config/urxvtconfig/config";
+QString pathToFile = qgetenv("HOME") + "/.Xdefaults";
+QString pathToFileResources = qgetenv("HOME")+ "/.Xresources";
+QString pathToConfig = qgetenv("HOME")+ "/.config/urxvtconfig/config";
 
 bool extensionFlag = false;
 bool backupFlag = false;
@@ -333,11 +333,11 @@ void URXVTConfig::saveToFile(QString target)
 {
 
     if(target=="xdefaults"){
-        pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
+        pathToFile = qgetenv("HOME") + "/.Xdefaults";
     }else if(target=="xresources"){
-        pathToFile =  "/home/"+ qgetenv("USER") +"/.Xresources";
+        pathToFile =  qgetenv("HOME") + "/.Xresources";
     }else if(target=="other"){
-        pathToFile = QFileDialog::getSaveFileName(this,tr("Save File"),"/home/"+qgetenv("USER")+"/Xresources");
+        pathToFile = QFileDialog::getSaveFileName(this,tr("Save File"),qgetenv("HOME")+"/Xresources");
     }
 
     if(((target == "xdefaults" && QFileInfo(pathToFile).exists()) || (target == "xresources" && QFileInfo(pathToFile).exists())) && !backupFlag){
@@ -354,10 +354,10 @@ void URXVTConfig::saveToFile(QString target)
             QString backupLocation = QFileDialog::getSaveFileName(this,tr("Save File"),"/home/"+qgetenv("USER")+"/.Xresources_Bak");
             if(target == "xdefaults")
             {
-                QFile::copy("/home/"+ qgetenv("USER") +"/.Xdefaults", backupLocation);
+                QFile::copy(qgetenv("HOME") + "/.Xdefaults", backupLocation);
             }else if(target == "xresources")
             {
-                QFile::copy("/home/"+ qgetenv("USER") +"/.Xresources", backupLocation);
+                QFile::copy(qgetenv("HOME") + "/.Xresources", backupLocation);
             }
             if(backupLocation.isEmpty())
             {
@@ -520,11 +520,11 @@ void URXVTConfig::openFromFile(QString target)
 {
 
     if(target=="xdefaults"){
-        pathToFile = "/home/"+ qgetenv("USER") +"/.Xdefaults";
+        pathToFile = qgetenv("HOME") + "/.Xdefaults";
     }else if(target=="xresources"){
-        pathToFile =  "/home/"+ qgetenv("USER") +"/.Xresources";
+        pathToFile =  qgetenv("HOME")+ "/.Xresources";
     }else if(target=="other"){
-        pathToFile = QFileDialog::getOpenFileName(this,tr("Open File"),"/home/"+qgetenv("USER")+"/");
+        pathToFile = QFileDialog::getOpenFileName(this,tr("Open File"),qgetenv("HOME")+"/");
         if(pathToFile.isEmpty()) return;
     }
 
@@ -937,7 +937,7 @@ void URXVTConfig::on_actionFrom_File_triggered()
     }
 
     QProcess process;
-    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Image"),"/home/"+qgetenv("USER")+"/",tr("Image Files (*.png *.jpg *.bmp)"));
+    QString fileName = QFileDialog::getOpenFileName(this,tr("Open Image"),qgetenv("HOME") + "/",tr("Image Files (*.png *.jpg *.bmp)"));
 
     if(fileName.isEmpty()) return;
 
@@ -1061,7 +1061,7 @@ void URXVTConfig::on_actionChoose_Prese_triggered()
 
 void URXVTConfig::on_actionSave_Preset_triggered()
 {
-    QString pathToDb ="/home/"+qgetenv("USER")+"/.config/urxvtconfig/presets.db";
+    QString pathToDb = qgetenv("HOME") + "/.config/urxvtconfig/presets.db";
     QFile database(pathToDb);
 
     if(!database.exists()){
