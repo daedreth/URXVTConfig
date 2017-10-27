@@ -345,7 +345,7 @@ void URXVTConfig::saveToFile(QString target)
         msgBox.setText("Question!");
         msgBox.setIcon(QMessageBox::Question);
         msgBox.setInformativeText("Do you wish to backup your existing configuration?");
-        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
         msgBox.setDefaultButton(QMessageBox::Yes);
         int ret = msgBox.exec();
 
@@ -368,6 +368,11 @@ void URXVTConfig::saveToFile(QString target)
                 msgBox.exec();
                  return;
             }
+        }
+        
+        else if(ret == QMessageBox::Cancel)
+        {
+            return;
         }
     }
 
