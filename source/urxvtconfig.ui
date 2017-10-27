@@ -1235,7 +1235,7 @@
   </action>
   <action name="actionFrom_File">
    <property name="text">
-    <string>Colors from File... (Ctrl + N)</string>
+    <string>Colors from File... (Ctrl + F)</string>
    </property>
   </action>
   <action name="actionSave_to_Xresources">
