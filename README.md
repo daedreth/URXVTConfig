@@ -29,7 +29,7 @@ A graphical user interface tool for configuration of the rxvt-unicode terminal e
 	- About: Displays a tiny window with general information.
 
 
-# Dependancies
+# Dependencies
 `qt5` - For the GUI.
 
 `imagemagick` - For generating color schemes from files.
