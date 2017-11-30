@@ -58,6 +58,12 @@ This will build from the latest commit on the "master" branch.
 
 Sync your portage and `emerge --ask --verbose x11-misc/urxvtconfig`
 
+- Void
+
+`urxvtconfig` is part of the main repository.
+
+`xbps-install -S urxvtconfig`
+
 - Other distributions
 
 As time passes, I will try to get this into as many repositories as I can, for now, just grab the latest release.
